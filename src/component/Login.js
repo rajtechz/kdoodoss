@@ -17,23 +17,16 @@ export default function Login() {
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
-
     const handleSubmit = async (e) => {
-        console.log(phone, password)
-        e.preventDefault()
-        let formData = new FormData();
-        formData.append('phone', phone);
-        formData.append('password', password);
+         e.preventDefault()
         try {
-            fetch('https://eventstaging.skoodos.com/api/login', {
+         await   fetch(Url, {
                 method: 'POST',
                 headers: {
                          'Accept': 'application/json',
                          'Content-Type': 'application/json'
                 },
-               body: {
-                phone: '8808647344',
-                password: '420247'}
+               body: JSON.stringify({'phone': phone, 'password': password})
                }).then((response) => response.json())
                .then((responseJson) => {
                          console.log(responseJson);
