@@ -1,45 +1,55 @@
 import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput } from '@mantine/core'
+import axios from 'axios';
 import React, { useState } from 'react'
-import { useForm } from '@mantine/form';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
+const Url = "https://eventstaging.skoodos.com/api/login"
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
 
 
-    const form = useForm({
-        initialValues: {
-            mobile: "",
-            password: "",
-        },
-        validate: {
-            mobile: (value) => (/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/.test(value) ? null : 'Invalid email'),
-            password: (value) => (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value) ? null : 'Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character'),
-
-        },
-    });
-    const register = async (value) => {
-        await fetch('http://localhost:8000/register', {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(value)
-        }).then(function (a) {
-            return a.json()
-        })
-            .then(function (json) {
-                console.log(json)
-            })
+    const handleMobileNumberChange = (e) => {
+        setPhone(e.target.value);
     }
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
 
-    const forgetPassword=()=>{
+    const handleSubmit = async (e) => {
+        console.log(phone, password)
+        e.preventDefault()
+        let formData = new FormData();
+        formData.append('phone', phone);
+        formData.append('password', password);
+        try {
+            fetch('https://eventstaging.skoodos.com/api/login', {
+                method: 'POST',
+                headers: {
+                         'Accept': 'application/json',
+                         'Content-Type': 'application/json'
+                },
+               body: {
+                phone: '8808647344',
+                password: '420247'}
+               }).then((response) => response.json())
+               .then((responseJson) => {
+                         console.log(responseJson);
+              });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    const forgetPassword = () => {
         window.location.href = '/forgetpassword';
     }
     return (
         <>
-            <Box>
+            <Box sx={(theme) => ({
+                overflow: 'hidden'
+            })}>
                 <Box
                     sx={(theme) => ({
                         height: "100vh",
@@ -67,7 +77,7 @@ export default function Login() {
                                 <Center mb={25}>
                                     <Text sx={(theme) => ({
                                         fontSize: "80px",
-                                        fontWeight:"bolder"
+                                        fontWeight: "bolder"
                                     })}> <span >𝘴𝓴</span> <span style={{ color: "#f2ff1c" }}>ₒₒ</span><span>𝚍ₒ𝘴</span></Text>
 
                                 </Center>
@@ -106,45 +116,46 @@ export default function Login() {
                             </Box>
                         </Center>
                         <Box mt="lg" mx="auto" component="form"
-                            // onSubmit={form.onSubmit((value) => form.reset(console.log(value)))}
-                            onSubmit={form.onSubmit((value) => { register(value) })}
-                            sx={(theme) => ({
+                            onSubmit={handleSubmit}
+                            sx={(theme) => ({ width: "90%", height: "100%", })}>
 
-                                width: "90%",
-                                height: "100%",
-                            })}>
-                            <Center>
-                                <Grid>
-                                    <Grid.Col>
-                                        <TextInput color='black' 
-                                            placeholder="Mobile"
-                                            {...form.getInputProps('mobile')}
-                                            error={form.errors.mobile}
-                                            pattern="[0-9]{10}"
-                                            size="md" />
-                                    </Grid.Col>
-                                    <Grid.Col pt="50px">
-                                        <TextInput placeholder="Password"
-                                            type={showPassword ? 'text' : 'password'}
-                                            styles={{
-                                                placeholder: {
-                                                    color: 'red',
-                                                }
-                                            }}
-                                            {...form.getInputProps('password')}
-                                            error={form.errors.password}
-                                            size="md"
-                                            rightSection={
-                                                <ActionIcon onClick={toggleShowPassword}>
-                                                    {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
-                                                </ActionIcon>
+                            <Grid>
+                                <Grid.Col>
+                                    <TextInput
+                                        name='password'
+                                        value={phone}
+                                        onChange={handleMobileNumberChange}
+                                        color='black'
+                                        placeholder="Mobile"
+                                        pattern="[0-9]{10}"
+                                        size="lg"
+                                        styles={{
+                                            error: {
+                                                color: 'pink',
                                             }
+                                        }} />
+                                </Grid.Col>
+                                <Grid.Col pt="xl">
+                                    <TextInput
+                                        name='password'
+                                        value={password}
+                                        onChange={handlePasswordChange}
 
-                                        />
+                                        size="lg" placeholder="Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        styles={{
+                                            error: {
+                                                color: 'pink',
+                                            }
+                                        }}
+                                        rightSection={
+                                            <ActionIcon onClick={toggleShowPassword}>
+                                                {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
+                                            </ActionIcon>
+                                        } />
 
-                                    </Grid.Col>
-                                </Grid>
-                            </Center>
+                                </Grid.Col>
+                            </Grid>
                             <Center mt="xl">
                                 <Box>
 
@@ -157,20 +168,11 @@ export default function Login() {
                                 </Box>
                             </Center>
                             <Center mt="xl">
-
                                 <Box>
-
-                                    <Button radius="md" size='lg' type='submit' color="pink" px={50}>
-                                        Submit
-                                    </Button>
+                                    <Button radius="md" size='lg' type='submit' color="pink" px={50}>Submit</Button>
                                 </Box>
                             </Center>
                         </Box>
-
-
-
-
-
                     </Box>
                 </Box>
 
