@@ -1,6 +1,6 @@
 import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput } from '@mantine/core'
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 const Url = "https://eventstaging.skoodos.com/api/login"
@@ -9,7 +9,8 @@ export default function Login() {
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-
+    const [mobileError, setMobileError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value);
@@ -18,25 +19,41 @@ export default function Login() {
         setPassword(e.target.value);
     };
     const handleSubmit = async (e) => {
-         e.preventDefault()
+        e.preventDefault()
+        profile()
+        setPasswordError('');
+        setMobileError('');
+        if (password.length < 6) {
+            setPasswordError('Password must be at least 6 characters long.');
+        }
+        const mobileRegex = /^\d{10}$/;
+        if (!phone.match(mobileRegex)) {
+            setMobileError('Invalid mobile number format.');
+        }
+        if (password.length >= 6 && phone.match(mobileRegex)) {
+            console.log('Form submitted successfully.');
+        }
         try {
-         await   fetch(Url, {
+            await fetch(Url, {
                 method: 'POST',
                 headers: {
-                         'Accept': 'application/json',
-                         'Content-Type': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-               body: JSON.stringify({'phone': phone, 'password': password})
-               }).then((response) => response.json())
-               .then((responseJson) => {
-                         console.log(responseJson);
-              });
+                body: JSON.stringify({ 'phone': phone, 'password': password })
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                });
         } catch (error) {
             console.error(error);
         }
     }
     const forgetPassword = () => {
         window.location.href = '/forgetpassword';
+    }
+    const profile = ()=>{
+        window.location.href = '/attendence';
     }
     return (
         <>
@@ -74,32 +91,22 @@ export default function Login() {
                                     })}> <span >𝘴𝓴</span> <span style={{ color: "#f2ff1c" }}>ₒₒ</span><span>𝚍ₒ𝘴</span></Text>
 
                                 </Center>
-
                                 <Text sx={(theme) => ({
                                     color: "#fff",
                                     fontSize: "20px"
-                                })}>
-
-                                    Welcome to <span > <b> Skoodos Event </b></span>
-
-                                </Text>
+                                })}>Welcome to <span > <b> Skoodos Event </b></span></Text>
                                 <Center>
                                     <Box>
-
                                         <Text
                                             sx={(theme) => ({
                                                 color: "#fff",
                                                 fontSize: "20px"
                                             })}>
                                             <b>   Check In App! </b> <br />
-
                                         </Text>
-
                                     </Box>
-
                                 </Center>
                                 <Center mt="xs"
-
                                     sx={(theme) => ({
                                         color: "#f2ff1c",
                                         fontSize: "20px"
@@ -127,6 +134,8 @@ export default function Login() {
                                                 color: 'pink',
                                             }
                                         }} />
+                                    {mobileError && <Text style={{color:"red"}}>{mobileError}</Text>} 
+
                                 </Grid.Col>
                                 <Grid.Col pt="xl">
                                     <TextInput
@@ -146,6 +155,9 @@ export default function Login() {
                                                 {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
                                             </ActionIcon>
                                         } />
+                                    {passwordError && <Text style={{color:"red"}}>{passwordError}</Text>} 
+
+
 
                                 </Grid.Col>
                             </Grid>

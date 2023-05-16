@@ -1,10 +1,10 @@
 import { Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text } from '@mantine/core'
 import React from 'react'
-import { AiOutlineArrowLeft } from 'react-icons/ai'
+
 export default function Attendence() {
-    const studentList=()=>({
-        
-    })
+    const studentList=()=>{
+        window.location.href = '/attendancelist';
+    }
     return (
         <>
             <Box sx={(theme) => ({
@@ -37,7 +37,8 @@ export default function Attendence() {
                             </Center>
                             <Center>
 
-                                <Text sx={(theme) => ({
+                                <Text sx={(theme) =>
+ ({
                                     color: "#f2ff1c",
                                     fontSize: "20px",
                                     fontWeight: 700

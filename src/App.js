@@ -4,6 +4,7 @@ import Login from './component/Login';
 import ForgetPassword from './component/ForgetPassword';
 import Attendence from './component/Attendence';
 import Demo from './component/Demo';
+import AttendanceList from './component/AttendanceList';
 // import AttendeesList from './component/AttendeesList';
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Route path='/forgetpassword' element={<ForgetPassword/>} />
           <Route path='/attendence' element={<Attendence/>} />
           <Route path='/demo' element={<Demo/>} />
-          {/* <Route path='/attendeeslist' element={<AttendeesList/>} /> */}
+          <Route path='/attendancelist' element={<AttendanceList/>} />
+     
         </Routes>
       </BrowserRouter>
       

@@ -1,37 +1,46 @@
 import { Anchor, Box, Button, Center, TextInput, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
 
+
+const url = "https://eventstaging.skoodos.com/api/forget"
 export default function ForgetPassword() {
+    const [phone, setPhone] = useState('');
+    const [errors, setErrors] = useState("");
 
+    const handleMobileNumberChange = (e) => {
+        setPhone(e.target.value)
 
-    const form = useForm({
-        initialValues: {
-            mobile: "",
-        },
-        validate: {
-            mobile: (value) => (/^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/.test(value) ? null : 'Invalid Mobile Number'),
-
-        },
-    });
-    const register = async (value) => {
-        await fetch('http://localhost:8000/register', {
-            method: "post",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(value)
-        }).then(function (a) {
-            return a.json()
-        })
-            .then(function (json) {
-                console.log(json)
-            })
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        console.log(phone)
+        setErrors("");
+        const mobileRegex = /^\d{10}$/;
+        if (!phone.match(mobileRegex)) {
+            setErrors('Invalid mobile number format.');
+        }
+
+        try {
+            await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 'phone': phone, })
+            }).then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                });
+        } catch (error) {
+            console.error(error);
+        }
+    }
     const loginWithPassword = () => {
         window.location.href = '/';
     }
-
     return (
         <>
             <Box sx={(theme) => ({
@@ -92,20 +101,21 @@ export default function ForgetPassword() {
                             </Box>
                         </Center>
                         <Box mt="50px" mx="auto" component="form"
-                            onSubmit={form.onSubmit((value) => { register(value) })}
+                            onSubmit={handleSubmit}
                             sx={(theme) => ({
                                 width: "90%",
                                 height: "100%",
                             })}>
                             <TextInput color='black' size='lg'
                                 placeholder="Mobile"
-                                {...form.getInputProps('mobile')}
-                                error={form.errors.mobile}
+                                value={phone}
+                                onChange={handleMobileNumberChange}
                                 pattern="[0-9]{10}"
-                                styles={{
-                                    error: {
-                                        color: "#fff",
-                                    },}}/>
+                                styles={{error: {color: "#fff",}}} />
+                            <Text >
+                                {errors && <Text style={{ color: "red" }}>{errors}</Text>}
+                            </Text>
+
 
 
                             <Center mt="50px">
