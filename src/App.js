@@ -16,11 +16,42 @@ function App() {
           <Route path='/attendence' element={<Attendence/>} />
           <Route path='/demo' element={<Demo/>} />
           <Route path='/attendancelist' element={<AttendanceList/>} />
-     
+
         </Routes>
       </BrowserRouter>
-      
+
     </>
   );
 }
 export default App;
+
+
+
+
+
+
+
+
+
+
+// import React from 'react'
+// import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// import LogInPage from './pages/LogInPage'
+
+// export default function App() {
+//   return (
+//     <>
+//  <BrowserRouter>
+//          <Routes>
+//            <Route path='/' element={<LogInPage/>} />
+//            {/* <Route path='/forgetpassword' element={<ForgetPassword/>} /> */}
+//            {/* <Route path='/attendence' element={<Attendence/>} /> */}
+//            {/* <Route path='/demo' element={<Demo/>} /> */}
+//            {/* <Route path='/attendancelist' element={<AttendanceList/>} /> */}
+
+//          </Routes>
+//        </BrowserRouter>
+
+//     </>
+//   )
+// }

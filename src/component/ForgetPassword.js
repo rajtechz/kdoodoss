@@ -115,11 +115,7 @@ export default function ForgetPassword() {
                             <Text >
                                 {errors && <Text style={{ color: "red" }}>{errors}</Text>}
                             </Text>
-
-
-
                             <Center mt="50px">
-
                                 <Box>
 
                                     <Button radius="md" size='lg' type='submit' color="pink" px={50}>

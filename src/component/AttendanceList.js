@@ -1,7 +1,8 @@
-import { Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Tabs, Text, TextInput } from '@mantine/core'
+import { Avatar, Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Tabs, Text, TextInput } from '@mantine/core'
 import React from 'react'
 import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
+import { stockData } from "../data"
 export default function AttendenceList() {
     const studentList = () => {
         window.location.href = '/attendancelist';
@@ -9,19 +10,15 @@ export default function AttendenceList() {
     return (
         <>
             <Box sx={(theme) => ({
-                background: "black", height: "100vh", width: "100vw", overflow: "hidden"
+                background: "#09a2e5",
             })}>
 
                 <Container sx={(theme) => ({
-                    // background: "#09a2e5",
-                    background: "red",
-                    height: "90%",
-                    width: "100%",
+                    background: "#09a2e5",
+
+
                     padding: 20,
-                    marginTop: 20,
-                    "@media(max-width :768px)": {
-                        width: "90%",
-                    }
+
                 })} >
                     <Box shadow="sm" padding="lg" m="md"  >
                         <Flex sx={() => ({
@@ -29,7 +26,7 @@ export default function AttendenceList() {
 
                         })} >
                             <Box>
-                                {/* <BsFillCalendar2DateFill size={100} color='#fff' /> */}
+                                <BsFillCalendar2DateFill size={50} color='#fff' />
                             </Box>
                             <Box mt="lg">
                                 <Center>
@@ -53,15 +50,16 @@ export default function AttendenceList() {
                                 </Center>
                             </Box>
                             <Box>
-                                {/* <IoReloadOutline size={100} color='#fff' /> */}
+                                <IoReloadOutline size={50} color='#fff' />
                             </Box>
 
                         </Flex>
                     </Box>
 
-                    <Box maw="100%" mx="auto">
+                    <Box mx="auto">
+
                         <Box >
-                            <Tabs activeTabColor="blue" underlineColor="blue" active={0} variant="default"  >
+                            <Tabs activeTabColor="blue" underlineColor="blue" active={0} defaultValue="total" >
                                 <Tabs.List activeTabColor="blue" underlineColor="blue" active={0} variant="default" px={5} sx={(theme) => ({ justifyContent: "space-between" })}>
                                     <Tabs.Tab value="total" sx={(theme) => ({ fontSize: "18px", color: "#f2ff1c", fontWeight: "bold" })}>Total</Tabs.Tab>
                                     <Tabs.Tab value="awardees" sx={(theme) => ({ fontSize: "18px", color: "#f2ff1c", fontWeight: "bold" })} >Awardee(s)</Tabs.Tab>
@@ -75,32 +73,337 @@ export default function AttendenceList() {
                                         color='black'
                                         placeholder=' Search By / Name / Phone / ID'
                                         size="lg"
-
                                     />
                                     <Box mt={20}>
 
+                                        {
+                                            stockData.map((item, index) => {
+                                                return (
+                                                    <Box key={index}>
+                                                        <Tabs.Panel value="total" >
 
-                                        <Tabs.Panel value="total" >
-                                            <Box >
-                                                <Flex>
-<Text> Award</Text>
-<Text> Award</Text>
-<Text> Award</Text>
-                                                </Flex>
+                                                            <Box >
+                                                                <Flex gap={10}>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "green",
+                                                                        borderRadius: "20px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
 
-                                            </Box>
-                                        </Tabs.Panel>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "green",
+                                                                        borderRadius: "20px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
 
-                                        <Tabs.Panel value="awardees" >
-                                            Messages tab content
-                                        </Tabs.Panel>
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
 
-                                        <Tabs.Panel value="guest" >
-                                            Settings tab content
-                                        </Tabs.Panel>
-                                        <Tabs.Panel value="checked" >
-                                            Settings tab content Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, fugiat?
-                                        </Tabs.Panel>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "red",
+                                                                        borderRadius: "50px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}>2</Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                                <Box mt={20}>
+
+
+                                                                    <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                                        <Box>
+
+                                                                            <Box>
+                                                                                <Text
+                                                                                    sx={(theme) => ({
+                                                                                        color: "#09a2e5",
+                                                                                        fontSize: "18px",
+                                                                                        fontWeight: "bold"
+                                                                                    })}
+                                                                                >{item.name}</Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.email}</Text>
+                                                                            </Box><Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.mobile}</Text>
+                                                                            </Box>
+                                                                        </Box>
+
+                                                                        <Box mr={30} >
+                                                                            <Center>
+
+                                                                                <Avatar radius={100} size={70} />
+                                                                            </Center>
+                                                                            <Center>
+
+                                                                                <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                                            </Center>
+                                                                        </Box>
+                                                                    </Flex>
+                                                                    <Divider my="lg" color='#09a2e5' />
+                                                                </Box>
+                                                            </Box>
+                                                        </Tabs.Panel>
+
+                                                    </Box>
+                                                )
+                                            })
+                                        }
+                                        {
+                                            stockData.map((item, index) => {
+                                                return (
+                                                    <Box key={index}>
+                                                        <Tabs.Panel value="guest" >
+
+                                                            <Box >
+                                                                <Flex gap={10}>
+                                                                    <Box p={3} sx={(theme) => ({ background: "yellow", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}>
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "black",
+                                                                        borderRadius: "20px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "red",
+                                                                        borderRadius: "50px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}>2</Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                                <Box mt={20}>
+
+
+                                                                    <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                                        <Box>
+
+                                                                            <Box>
+                                                                                <Text
+                                                                                    sx={(theme) => ({
+                                                                                        color: "#09a2e5",
+                                                                                        fontSize: "18px",
+                                                                                        fontWeight: "bold"
+                                                                                    })}
+                                                                                >{item.name}</Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.email}</Text>
+                                                                            </Box><Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.mobile}</Text>
+                                                                            </Box>
+                                                                        </Box>
+
+                                                                        <Box mr={30} >
+                                                                            <Center>
+
+                                                                                <Avatar radius={100} size={70} />
+                                                                            </Center>
+                                                                            <Center>
+
+                                                                                <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                                            </Center>
+                                                                        </Box>
+                                                                    </Flex>
+                                                                    <Divider my="lg" color='#09a2e5' />
+                                                                </Box>
+                                                            </Box>
+                                                        </Tabs.Panel>
+
+                                                    </Box>
+                                                )
+                                            })
+                                        }  {
+                                            stockData.map((item, index) => {
+                                                return (
+                                                    <Box key={index}>
+                                                        <Tabs.Panel value="checked" >
+
+                                                            <Box >
+                                                                <Flex gap={10}>
+                                                                    <Box p={3} sx={(theme) => ({ background: "yellow", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}>
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "black",
+                                                                        borderRadius: "20px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "red",
+                                                                        borderRadius: "50px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}>2</Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                                <Box mt={20}>
+
+
+                                                                    <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                                        <Box>
+
+                                                                            <Box>
+                                                                                <Text
+                                                                                    sx={(theme) => ({
+                                                                                        color: "#09a2e5",
+                                                                                        fontSize: "18px",
+                                                                                        fontWeight: "bold"
+                                                                                    })}
+                                                                                >{item.name}</Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.email}</Text>
+                                                                            </Box><Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.mobile}</Text>
+                                                                            </Box>
+                                                                        </Box>
+
+                                                                        <Box mr={30} >
+                                                                            <Center>
+
+                                                                                <Avatar radius={100} size={70} />
+                                                                            </Center>
+                                                                            <Center>
+
+                                                                                <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                                            </Center>
+                                                                        </Box>
+                                                                    </Flex>
+                                                                    <Divider my="lg" color='#09a2e5' />
+                                                                </Box>
+                                                            </Box>
+                                                        </Tabs.Panel>
+                                                    </Box>
+                                                )
+                                            })
+                                        }  {
+                                            stockData.map((item, index) => {
+                                                return (
+                                                    <Box key={index}>
+                                                        <Tabs.Panel value="awardees" >
+
+                                                            <Box >
+                                                                <Flex gap={10}>
+                                                                    <Box p={3} sx={(theme) => ({ background: "yellow", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}>
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "black",
+                                                                        borderRadius: "20px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}> Award</Text>
+                                                                    </Box>
+
+                                                                    <Box p={3} sx={(theme) => ({
+                                                                        background: "red",
+                                                                        borderRadius: "50px",
+                                                                        color: "#fff",
+                                                                        fontSize: "18px",
+                                                                        fontWeight: "bold"
+                                                                    })}>
+
+                                                                        <Text mx={10}>2</Text>
+                                                                    </Box>
+                                                                </Flex>
+                                                                <Box mt={20}>
+
+
+                                                                    <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                                        <Box>
+
+                                                                            <Box>
+                                                                                <Text
+                                                                                    sx={(theme) => ({
+                                                                                        color: "#09a2e5",
+                                                                                        fontSize: "18px",
+                                                                                        fontWeight: "bold"
+                                                                                    })}
+                                                                                >{item.name}</Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.email}</Text>
+                                                                            </Box><Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                    // fontWeight: "bold"
+                                                                                })}>{item.mobile}</Text>
+                                                                            </Box>
+                                                                        </Box>
+
+                                                                        <Box mr={30} >
+                                                                            <Center>
+
+                                                                                <Avatar radius={100} size={70} />
+                                                                            </Center>
+                                                                            <Center>
+
+                                                                                <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                                            </Center>
+                                                                        </Box>
+                                                                    </Flex>
+                                                                    <Divider my="lg" color='#09a2e5' />
+                                                                </Box>
+                                                            </Box>
+                                                        </Tabs.Panel>
+
+                                                    </Box>
+                                                )
+                                            })
+                                        }
                                     </Box>
                                 </Box>
                             </Tabs>
@@ -115,3 +418,5 @@ export default function AttendenceList() {
         </>
     )
 }
+
+

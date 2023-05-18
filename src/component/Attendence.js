@@ -1,10 +1,33 @@
 import { Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text } from '@mantine/core'
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { AiOutlineArrowLeft } from 'react-icons/ai'
+const Url = "https://eventstaging.skoodos.com/api/1/guest-list"
 export default function Attendence() {
-    const studentList=()=>{
+    const [attendence, setattendance] = useState("")
+    const studentList = () => {
         window.location.href = '/attendancelist';
+
+
     }
+
+    useEffect(() => {
+        try {
+            fetch(Url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify({ 'phone': phone, 'password': password })
+            }).then((response) => response.json()).then((responseJson) => {
+                console.log(responseJson);
+
+
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }, [])
     return (
         <>
             <Box sx={(theme) => ({
@@ -20,25 +43,21 @@ export default function Attendence() {
                     }
                 })} >
                     {/* <Button color='pink'> <AiOutlineArrowLeft size="md" /> </Button> */}
+
                     <Center mt={50}>
 
                         <Box>
-                            <Center>
-                                <Text
-                                    sx={(theme) => ({
-                                        color: "#fff",
-                                        fontSize: "25px",
-                                        fontWeight: 700
-                                    })}
+                            {/* <Button color='red'> Hello</Button> */}
 
-                                >
+                            <Center>
+                                <Text sx={(theme) => ({ color: "#fff", fontSize: "25px", fontWeight: 700 })}                            >
                                     ATTENDEE DETAILS
                                 </Text>
                             </Center>
                             <Center>
 
                                 <Text sx={(theme) =>
- ({
+                                ({
                                     color: "#f2ff1c",
                                     fontSize: "20px",
                                     fontWeight: 700
@@ -223,12 +242,19 @@ export default function Attendence() {
                                         >Yes</Text>
                                     </Box>
                                 </Grid.Col>
+
                             </Grid>
                         </Box>
                     </Card>
+                    <Center mt="lg">
+                        <Button color='pink' size='lg' radius="md">
+
+                            <Text color='#fff' size={18}>Check-In</Text>
+                        </Button>
+                    </Center>
                 </Container>
 
-            </Box>
+            </Box >
 
 
         </>

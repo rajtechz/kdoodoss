@@ -11,7 +11,6 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [mobileError, setMobileError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value);
     }
@@ -41,10 +40,13 @@ export default function Login() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ 'phone': phone, 'password': password })
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
-                });
+            }).then((response) => response.json()).then((responseJson) => {
+                console.log(responseJson);
+
+                if (responseJson === true) {
+                    window.location.href = '/attendence';
+                }
+            });
         } catch (error) {
             console.error(error);
         }
@@ -52,7 +54,7 @@ export default function Login() {
     const forgetPassword = () => {
         window.location.href = '/forgetpassword';
     }
-    const profile = ()=>{
+    const profile = () => {
         window.location.href = '/attendence';
     }
     return (
@@ -134,7 +136,7 @@ export default function Login() {
                                                 color: 'pink',
                                             }
                                         }} />
-                                    {mobileError && <Text style={{color:"red"}}>{mobileError}</Text>} 
+                                    {mobileError && <Text style={{ color: "red" }}>{mobileError}</Text>}
 
                                 </Grid.Col>
                                 <Grid.Col pt="xl">
@@ -155,7 +157,7 @@ export default function Login() {
                                                 {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
                                             </ActionIcon>
                                         } />
-                                    {passwordError && <Text style={{color:"red"}}>{passwordError}</Text>} 
+                                    {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
 
 
 
