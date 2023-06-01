@@ -44,7 +44,10 @@ export default function ForgetPassword() {
     return (
         <>
             <Box sx={(theme) => ({
-                overflow: 'hidden'
+                    //  background:"#d0f23d",
+                     overflow:"hidden",
+                     height:"100vh",
+                     width:"100vw"
             })}>
                 <Box
                     sx={(theme) => ({

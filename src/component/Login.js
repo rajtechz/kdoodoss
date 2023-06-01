@@ -1,8 +1,7 @@
-import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput } from '@mantine/core'
+import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput, Alert } from '@mantine/core'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
-
 const Url = "https://eventstaging.skoodos.com/api/login"
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -11,15 +10,17 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [mobileError, setMobileError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [loginToken, setLogInToken] = useState('')
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value);
     }
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
     };
+
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        profile()
         setPasswordError('');
         setMobileError('');
         if (password.length < 6) {
@@ -30,37 +31,41 @@ export default function Login() {
             setMobileError('Invalid mobile number format.');
         }
         if (password.length >= 6 && phone.match(mobileRegex)) {
-            console.log('Form submitted successfully.');
-        }
-        try {
-            await fetch(Url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 'phone': phone, 'password': password })
-            }).then((response) => response.json()).then((responseJson) => {
-                console.log(responseJson);
 
-                if (responseJson === true) {
-                    window.location.href = '/attendence';
-                }
-            });
-        } catch (error) {
-            console.error(error);
+            try {
+                const response = await axios.post(Url, {
+                    phone: phone,
+                    password: password
+                }, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                    }
+                });
+                setLogInToken(response.data.data.token);
+                console.log(loginToken)
+                // console.log(response.data.data.token);
+                // console.log(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+
         }
     }
+
+
+
     const forgetPassword = () => {
         window.location.href = '/forgetpassword';
-    }
-    const profile = () => {
-        window.location.href = '/attendence';
     }
     return (
         <>
             <Box sx={(theme) => ({
-                overflow: 'hidden'
+                overflow: "hidden",
+                height: "100vh",
+                width: "100vw"
+
             })}>
                 <Box
                     sx={(theme) => ({
@@ -120,7 +125,6 @@ export default function Login() {
                         <Box mt="lg" mx="auto" component="form"
                             onSubmit={handleSubmit}
                             sx={(theme) => ({ width: "90%", height: "100%", })}>
-
                             <Grid>
                                 <Grid.Col>
                                     <TextInput
@@ -137,14 +141,12 @@ export default function Login() {
                                             }
                                         }} />
                                     {mobileError && <Text style={{ color: "red" }}>{mobileError}</Text>}
-
                                 </Grid.Col>
                                 <Grid.Col pt="xl">
                                     <TextInput
                                         name='password'
                                         value={password}
                                         onChange={handlePasswordChange}
-
                                         size="lg" placeholder="Password"
                                         type={showPassword ? 'text' : 'password'}
                                         styles={{
@@ -158,14 +160,10 @@ export default function Login() {
                                             </ActionIcon>
                                         } />
                                     {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
-
-
-
                                 </Grid.Col>
                             </Grid>
                             <Center mt="xl">
                                 <Box>
-
                                     <Anchor onClick={forgetPassword} sx={(theme) => ({
                                         color: "#f2ff1c",
                                         fontSize: "20px"

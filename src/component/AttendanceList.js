@@ -412,7 +412,7 @@ export default function AttendenceList() {
 
                 </Container>
 
-            </Box>  padding:20
+            </Box>  
 
 
         </>

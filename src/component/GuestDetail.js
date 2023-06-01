@@ -1,58 +1,87 @@
-import { Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text } from '@mantine/core'
-import React, { useEffect, useState } from 'react'
-import { AiOutlineArrowLeft } from 'react-icons/ai'
-import NavBar from './NavBar'
-const Url = "https://eventstaging.skoodos.com/api/1/guest-list"
-export default function Attendence() {
-    const [attendence, setattendance] = useState("")
-    const studentList = () => {
-        window.location.href = '/attendancelist';
+import { Box, Button, Card, Center, Container, Divider, Grid, Text } from '@mantine/core'
+import axios from 'axios';
+import React, { useEffect, useState, } from 'react'
 
 
-    }
+export default function GuestDetail() {
 
+    const [guest, setGuest] = useState("")
+    const [attendence, setAttendance] = useState("")
+    const [ticketType, setTicketType] = useState("")
+    const [status, setStatus] = useState('')
+    const [checkIn, setCheckIn] = useState("")
     useEffect(() => {
-        try {
-            fetch(Url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                // body: JSON.stringify({ 'phone': phone, 'password': password })
-            }).then((response) => response.json()).then((responseJson) => {
-                console.log(responseJson);
+        const urlGuestDetail = `https://eventstaging.skoodos.com/api/1/attendes/2`;
+        const token = "297|6ypQFt5rFbTSOzksXi16hkk0xpGAawquZpZNsivE"
+        const fetchData = async () => {
+
+            try {
+                const response = await axios.post(urlGuestDetail, {
+                }, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+                // console.log("hello", response.data.name)
+                setGuest(response.data)
+                console.log(guest.message)
+
+                // console.log(guest.message)
+                // console.log(response.data.message)
+                // console.log(response.data.data.token);
+                // console.log(response.data.data.attendee)
+                // console.log(response.data.data.attendee.name)
+
+                setAttendance(response.data.data)
+                console.log(attendence)
+                // console.log(attendence.attendee.name)
+                // console.log(attendence.attendee.email)
+
+                console.log(response.data.data.attendee.tickettype.name)
+
+                setTicketType(response.data.data.attendee.tickettype.name)
+
+                console.log(ticketType)
+                console.log(response.data.data.attendee.status)
+                setStatus(response.data.data.attendee.status)
+                if (status === 1) {
+                    setCheckIn("Yes")
+                    console.log(checkIn)
+                } else{
+                    setCheckIn("No")
+                }
 
 
-            });
-        } catch (error) {
-            console.error(error);
-        }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
     }, [])
     return (
         <>
             <Box sx={(theme) => ({
-                background: "#09a2e5", height: "100vh", width: "100vw",
+                background: "#09a2e5", height: "100vh", width: "100vw", overflow: "hidden"
             })}>
-
                 <Container pt="lg" width="40%" sx={(theme) => ({
                     height: "100%",
                     width: "100%",
                     "@media(max-width :768px)": {
                         width: "90%",
-                        // background: "red"
+
                     }
                 })} >
-                    {/* <Button color='pink'> <AiOutlineArrowLeft size="md" /> </Button> */}
-
                     <Center mt={50}>
 
                         <Box>
-                            {/* <Button color='red'> Hello</Button> */}
+
 
                             <Center>
-                                <Text sx={(theme) => ({ color: "#fff", fontSize: "25px", fontWeight: 700 })}                            >
-                                    ATTENDEE DETAILS
+                                <Text sx={(theme) => ({ color: "#fff", fontSize: "25px", fontWeight: 700 })}         >
+                                    {guest.message}
                                 </Text>
                             </Center>
                             <Center>
@@ -63,46 +92,29 @@ export default function Attendence() {
                                     fontSize: "20px",
                                     fontWeight: 700
                                 })}>
-                                    RAJESH KUMAR
+                                    {attendence.attendee.name}
                                 </Text>
                             </Center>
                             <Box mt="lg">
 
                                 <Center >
-
                                     <Button size='md' px={50} mr={15} radius={50} color='green' style={{ border: "1px solid #fff" }}>Awardee</Button>
-                                    <Button size='md' px={50} ml={15} radius={50} color='green' style={{ border: "1px solid #fff" }} onClick={studentList}>Student</Button>
+                                    <Button size='md' px={50} ml={15} radius={50} color='green' style={{ border: "1px solid #fff" }} >Student</Button>
 
                                 </Center>
                             </Box>
-
-
                         </Box>
                     </Center>
-
-
-
                     <Card shadow="sm" padding="lg" radius="md" withBorder mt={50}>
-
                         <Box maw="90%" mx="auto">
-
-
                             <Center mt={50}>
-
                                 <Text
                                     sx={(theme) => ({
                                         color: "#d31360",
                                         fontSize: "25px",
                                         fontWeight: 700
-                                    })}
-
-
-                                > ALL ROUNDER
-
-
-
+                                    })}> ALL ROUNDER
                                 </Text>
-
                             </Center>
                             <Center>
 
@@ -112,11 +124,7 @@ export default function Attendence() {
                                         fontSize: "16px",
                                         fontWeight: 700
                                     })}
-
-
                                 > PLAY GROUP</Text>
-
-
                             </Center>
                             <Box mt={25}>
 
@@ -125,8 +133,6 @@ export default function Attendence() {
                             <Grid>
                                 <Grid.Col md={6} lg={6} sm={6} xl={6} xs={6}>
                                     <Box mt={50}>
-
-
                                         <Text
                                             sx={(theme) => ({
                                                 color: "gray",
@@ -134,7 +140,7 @@ export default function Attendence() {
                                                 // fontWeight:"bold"
                                             })}
 
-                                        > School Name  </Text>
+                                        >School Name</Text>
                                         <Text
                                             sx={(theme) => ({
                                                 // color: "gray",
@@ -142,17 +148,19 @@ export default function Attendence() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        > Happy Model School</Text>
+                                        >
+                                            {attendence.attendee.school_name}
+                                            KD publick school
+                                        </Text>
                                     </Box>
                                     <Box mt={50}>
                                         <Text
                                             sx={(theme) => ({
                                                 color: "gray",
                                                 fontSize: "20px",
-                                                // fontWeight:"bold"
                                             })}
 
-                                        > Phone</Text>
+                                        >Phone</Text>
                                         <Text
                                             sx={(theme) => ({
                                                 // color: "gray",
@@ -160,7 +168,9 @@ export default function Attendence() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        > 9876543210</Text>
+                                        >
+                                            {attendence.attendee.phone}
+                                        </Text>
                                     </Box>
                                     <Box mt={50}>
                                         <Text
@@ -178,7 +188,7 @@ export default function Attendence() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        >VVIP : <span style={{ color: "#d31360" }}>FREE</span> </Text>
+                                        >{ticketType} </Text>
                                     </Box>
                                 </Grid.Col>
                                 <Grid.Col xs={6} md={6} lg={6} sm={6} xl={6}>
@@ -189,18 +199,18 @@ export default function Attendence() {
                                             sx={(theme) => ({
                                                 color: "gray",
                                                 fontSize: "20px",
-                                                // fontWeight:"bold"
                                             })}
 
                                         > Email </Text>
                                         <Text
                                             sx={(theme) => ({
-                                                // color: "gray",
                                                 fontSize: "20px",
                                                 fontWeight: "bold"
                                             })}
 
-                                        >hiitechz07@gmail.com</Text>
+                                        >
+                                            {attendence.attendee.email}
+                                        </Text>
                                     </Box>
                                     <Box mt={50}>
 
@@ -209,7 +219,6 @@ export default function Attendence() {
                                             sx={(theme) => ({
                                                 color: "gray",
                                                 fontSize: "20px",
-                                                // fontWeight:"bold"
                                             })}
 
                                         > # of Guest </Text>
@@ -220,16 +229,16 @@ export default function Attendence() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        >4</Text>
+                                        >
+                                            {attendence.attendee.type}
+
+                                        </Text>
                                     </Box>
                                     <Box mt={50} mb={50}>
-
-
                                         <Text
                                             sx={(theme) => ({
                                                 color: "gray",
                                                 fontSize: "20px",
-                                                // fontWeight:"bold"
                                             })}
 
                                         > Check-In</Text>
@@ -239,8 +248,7 @@ export default function Attendence() {
                                                 fontSize: "20px",
                                                 fontWeight: "bold"
                                             })}
-
-                                        >Yes</Text>
+                                        >{checkIn}</Text>
                                     </Box>
                                 </Grid.Col>
 
