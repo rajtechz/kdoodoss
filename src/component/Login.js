@@ -53,9 +53,6 @@ export default function Login() {
 
         }
     }
-
-
-
     const forgetPassword = () => {
         window.location.href = '/forgetpassword';
     }
@@ -65,7 +62,6 @@ export default function Login() {
                 overflow: "hidden",
                 height: "100vh",
                 width: "100vw"
-
             })}>
                 <Box
                     sx={(theme) => ({

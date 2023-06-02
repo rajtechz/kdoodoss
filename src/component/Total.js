@@ -9,8 +9,6 @@ export default function Total() {
 
     const [attendancelist, setAttendanceList] = useState([])
     useEffect(() => {
-
-
         const token = "297|6ypQFt5rFbTSOzksXi16hkk0xpGAawquZpZNsivE"
         const fetchData = async () => {
 
@@ -92,88 +90,80 @@ export default function Total() {
                                                 color: "#f2ff1c",
                                                 fontWeight: "bold"
                                             })}
-
                                         > Twinkle Twinkle | Delhi | Session 1 </Text>
                                     </Center>
                                 </Box>
                                 <Box>
                                     <IoReloadOutline size={50} color='#fff' />
                                 </Box>
-
                             </Flex>
                         </Box>
-
                         <Box mx="auto">
-
                             <Box >
-
                                 <Box sx={(theme) => ({ background: "#fff", padding: 20, })}>
 
                                     <Box mt={20}>
-                                        {attendancelist && attendancelist.map((item, index) => {
-                                            return (
-                                                <Box key={index}>
-                                                    <Flex gap={10}>
-                                                        <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
+                                        <Box >
+                                            <Flex gap={10}>
+                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
 
-                                                        <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
+                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
 
-                                                        <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>2</Text></Box>
-                                                    </Flex>
-                                                    <Box mt={20}>
-                                                        <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
-                                                            <Box>
+                                                <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>2</Text></Box>
+                                            </Flex>
+                                            <Box mt={20}>
+                                                <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                    <Box>
+                                                        <Box>
+                                                            <Text
+                                                                sx={(theme) => ({
+                                                                    color: "#09a2e5",
+                                                                    fontSize: "18px",
+                                                                    fontWeight: "bold"
+                                                                })}
+                                                            >
+                                                                {attendancelist.data.attendees[0].name}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Text sx={(theme) => ({
+                                                                fontSize: "18px",
+                                                                // fontWeight: "bold"kcnd
+                                                            })}>
 
-                                                                <Box>
-                                                                    <Text
-                                                                        sx={(theme) => ({
-                                                                            color: "#09a2e5",
-                                                                            fontSize: "18px",
-                                                                            fontWeight: "bold"
-                                                                        })}
-                                                                    >
-                                                                        {/* {item.data.attendees.name} */}
-                                                                    </Text>
-                                                                </Box>
-                                                                <Box>
-                                                                    <Text sx={(theme) => ({
-                                                                        fontSize: "18px",
-                                                                        // fontWeight: "bold"kcnd
-                                                                    })}>wdqcq</Text>
-                                                                </Box><Box>
-                                                                    <Text sx={(theme) => ({
-                                                                        fontSize: "18px",
-                                                                        // fontWeight: "bold"
-                                                                    })}>qwcqw</Text>
-                                                                </Box>
-                                                            </Box>
+                                                                {attendancelist.data.attendees[0].email}
 
-                                                            <Box mr={30} >
-                                                                <Center>
-                                                                    <Avatar radius={100} size={70} />
-                                                                </Center>
-                                                                <Center>
+                                                            </Text>
+                                                        </Box><Box>
+                                                            <Text sx={(theme) => ({
+                                                                fontSize: "18px",
+                                                                // fontWeight: "bold"
+                                                            })}>
 
-                                                                    <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
-                                                                </Center>
-                                                            </Box>
-                                                        </Flex>
-                                                        <Divider my="lg" color='#09a2e5' />
+                                                                {attendancelist.data.attendees[0].phone}
+
+                                                            </Text>
+                                                        </Box>
                                                     </Box>
-                                                </Box>
-                                            );
-                                        })}
+                                                    <Box mr={30} >
+                                                        <Center>
+                                                            <Avatar radius={100} size={70} />
+                                                        </Center>
+                                                        <Center>
+
+                                                            <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                        </Center>
+                                                    </Box>
+                                                </Flex>
+                                                <Divider my="lg" color='#09a2e5' />
+                                            </Box>
+                                        </Box>
                                     </Box>
                                 </Box>
-
                             </Box>
                         </Box>
                     </Container>
-
                 </Box >
-
-
-
             </Box >
 
 

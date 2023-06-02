@@ -36,7 +36,7 @@ export default function GuestDetail() {
                 // console.log(response.data.data.attendee.name)
 
                 setAttendance(response.data.data)
-                console.log(attendence)
+                // console.log(attendence)
                 // console.log(attendence.attendee.name)
                 // console.log(attendence.attendee.email)
 
