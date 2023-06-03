@@ -4,14 +4,19 @@ import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
 import { stockData } from "../data"
 import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
 export default function Total() {
 
-    const [attendancelist, setAttendanceList] = useState([])
-    useEffect(() => {
-        const token = "297|6ypQFt5rFbTSOzksXi16hkk0xpGAawquZpZNsivE"
-        const fetchData = async () => {
 
+    const [attendancelist, setAttendanceList] = useState([])
+
+    useEffect(() => {
+
+
+        const fetchData = async () => {
+            let token = await AsyncStorage.getItem('token');
+            console.log(token)
             try {
                 const response = await axios.post(urlGuestList, {
                 }, {
@@ -22,11 +27,11 @@ export default function Total() {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-
-                console.log(response.data.data.attendees[0].name)
+                console.log(response.data)
                 // console.log(response.data.message)
                 setAttendanceList(response.data)
-                console.log("hello", attendancelist.data.attendees[0].name)
+                console.log("hello", attendancelist?.data?.attendees[0]?.name)
+                console.log("hello", attendancelist?.data)
 
             } catch (error) {
                 console.error(error);
@@ -34,6 +39,9 @@ export default function Total() {
         };
         fetchData();
     }, [])
+    const getToken = async () => {
+        return await AsyncStorage.getItem('token')
+    }
     return (
         <>
             <Box>
@@ -79,7 +87,9 @@ export default function Total() {
                                             color: "#fff",
                                             fontWeight: "bolder",
                                             textTransform: "uppercase"
-                                        })}> {attendancelist.message}</Text>
+                                        })}>
+                                            {attendancelist?.message}
+                                        </Text>
                                     </Center>
                                     <Center>
 
@@ -111,52 +121,64 @@ export default function Total() {
 
                                                 <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>2</Text></Box>
                                             </Flex>
-                                            <Box mt={20}>
-                                                <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
-                                                    <Box>
-                                                        <Box>
-                                                            <Text
-                                                                sx={(theme) => ({
-                                                                    color: "#09a2e5",
-                                                                    fontSize: "18px",
-                                                                    fontWeight: "bold"
-                                                                })}
-                                                            >
-                                                                {attendancelist.data.attendees[0].name}
-                                                            </Text>
+                                            {
+                                                attendancelist?.data?.attendees?.map((item, index) => {
+                                                    return (
+                                                        <Box key={index}>
+                                                            <Box mt={20}>
+                                                                <Flex sx={(theme) => ({ justifyContent: "space-between" })}>
+                                                                    <Box>
+                                                                        <Box>
+                                                                            <Text
+                                                                                sx={(theme) => ({
+                                                                                    color: "#09a2e5",
+                                                                                    fontSize: "18px",
+                                                                                    fontWeight: "bold"
+                                                                                })}
+                                                                            >
+                                                                                {item?.name}
+                                                                            </Text>
+                                                                        </Box>
+                                                                        <Box>
+                                                                            <Text sx={(theme) => ({
+                                                                                fontSize: "18px",
+                                                                                // fontWeight: "bold"kcnd
+                                                                            })}>
+
+                                                                                {/* {attendancelist.data.attendees[0].email} */}
+                                                                                {item?.email}
+
+                                                                            </Text>
+                                                                        </Box><Box>
+                                                                            <Text sx={(theme) => ({
+                                                                                fontSize: "18px",
+                                                                                // fontWeight: "bold"
+                                                                            })}>
+
+                                                                                {/* {attendancelist.data.attendees[0].phone} */}
+                                                                                {item?.phone}
+
+                                                                            </Text>
+                                                                        </Box>
+                                                                    </Box>
+                                                                    <Box mr={30} >
+                                                                        <Center>
+                                                                            <Avatar radius={100} size={70} />
+                                                                        </Center>
+                                                                        <Center>
+
+                                                                            <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
+                                                                        </Center>
+                                                                    </Box>
+                                                                </Flex>
+                                                                <Divider my="lg" color='#09a2e5' />
+                                                            </Box>
+
                                                         </Box>
-                                                        <Box>
-                                                            <Text sx={(theme) => ({
-                                                                fontSize: "18px",
-                                                                // fontWeight: "bold"kcnd
-                                                            })}>
+                                                    )
+                                                })
+                                            }
 
-                                                                {attendancelist.data.attendees[0].email}
-
-                                                            </Text>
-                                                        </Box><Box>
-                                                            <Text sx={(theme) => ({
-                                                                fontSize: "18px",
-                                                                // fontWeight: "bold"
-                                                            })}>
-
-                                                                {attendancelist.data.attendees[0].phone}
-
-                                                            </Text>
-                                                        </Box>
-                                                    </Box>
-                                                    <Box mr={30} >
-                                                        <Center>
-                                                            <Avatar radius={100} size={70} />
-                                                        </Center>
-                                                        <Center>
-
-                                                            <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold" })}>Check-In: <span style={{ color: "green" }}>Yes </span> </Text>
-                                                        </Center>
-                                                    </Box>
-                                                </Flex>
-                                                <Divider my="lg" color='#09a2e5' />
-                                            </Box>
                                         </Box>
                                     </Box>
                                 </Box>

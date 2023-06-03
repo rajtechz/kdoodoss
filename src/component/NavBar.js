@@ -1,37 +1,46 @@
-import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider } from "@mantine/core";
+import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider, Button } from "@mantine/core";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { MdLogout } from 'react-icons/md';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 const url = "https://eventstaging.skoodos.com/api/logout"
 export default function NavBar() {
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
     };
     const { classes } = useStyle()
     const profileSetting = () => {
-        window.location.href = "./setting"
+        window.location.href = '/setting';
+
     }
     const handleLogout = async (e) => {
         e.preventDefault()
+
+        let token = await AsyncStorage.getItem('token');
+        AsyncStorage.setItem('token', '')
+        console.log("hellow", token)
         try {
-            await fetch(url, {
-                method: 'POST',
+            const response = await axios.post(url, {
+            }, {
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                // body: JSON.stringify({})
-            }).then((response) => response.json()).then((responseJson) => {
-                console.log(responseJson);
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `Bearer ${token}`,
+                }
             });
+            console.log(response)
+            AsyncStorage.setItem('token', '')
         } catch (error) {
             console.error(error);
         }
-        window.location.href = "/"
     }
-    return(
+    return (
         <>
             <Navbar className={classes.navbar}>
                 <Box className={classes.headerBox}>
@@ -42,9 +51,8 @@ export default function NavBar() {
                             <Box>
                                 <Flex className={classes.logoBox2}>
                                     <Box>
-                                        <NavLink className={classes.logo}>
-                                            <RiUserSettingsLine size={40} onClick={profileSetting} />
-                                            <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Profile Setting</Text>
+                                        <NavLink onClick={profileSetting} className={classes.logo}>
+                                            <RiUserSettingsLine size={40} />
                                         </NavLink>
                                     </Box>
                                 </Flex>
@@ -56,21 +64,20 @@ export default function NavBar() {
                             <List>
                                 <Flex className={classes.navcollection}>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/total" className={classes.navitem}> Total</NavLink>
+                                        <NavLink to="/" className={classes.navitem}> Total</NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/awardees" className={classes.navitem}>Awardee</NavLink>
+                                        <NavLink to="/guestdetail" className={classes.navitem}>GuestDetail</NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/guest" className={classes.navitem}> Guest</NavLink>
+                                        {/* <NavLink to="/guest" className={classes.navitem}> Guest</NavLink> */}
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/checked" className={classes.navitem}> Checked</NavLink>
+                                        {/* <NavLink to="/checked" className={classes.navitem}> Checked</NavLink> */}
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/arived" className={classes.navitem}>Arived </NavLink>
+                                        {/* <NavLink to="/arived" className={classes.navitem}>Arived </NavLink> */}
                                     </List.Item>
-
                                 </Flex>
                             </List>
                         </Center>
@@ -83,29 +90,29 @@ export default function NavBar() {
                                         opened={open}
                                         onClick={() => setOpen((o) => !o)}
 
-                                        color="#fff"
+                                        color="#FF5829"
                                         zIndex={100} />
                                     <Drawer.Root
                                         opened={open}
                                         onClose={toggleDrawer}
                                         size={350}
                                         overlayProps={{ opacity: 0.4 }}>
-                                        <Drawer.Content style={{ backgroundColor: "#fff", color: "#fff" }}>
-                                            <Drawer.Header style={{ backgroundColor: "#fff" }}>
-                                                <Drawer.CloseButton size="lg" style={{ color: "#fff", background: "none" }} />
+                                        <Drawer.Content style={{ backgroundColor: "#FF5829", color: "#fff" }}>
+                                            <Drawer.Header style={{ backgroundColor: "#FF5829" }}>
+                                                <Drawer.CloseButton size="lg" style={{ color: "black", background: "none" }} />
                                             </Drawer.Header>
                                             <Drawer.Body mt={100}>
                                                 <Center>
-                                                    <List>
+                                                    <List style={{ listStyle: "none" }}>
                                                         <List.Item>
-                                                            <NavLink to="/" className={classes.drawerItem} > Home</NavLink>
-
+                                                            {/* <NavLink to="/" > Home</NavLink> */}
+                                                            <NavLink to="/" className={classes.drawerItem} > Total</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
 
 
                                                         <List.Item>
-                                                            <NavLink to="/about" className={classes.drawerItem}> About</NavLink>
+                                                            <NavLink to="/guestdetail" className={classes.drawerItem}>GuestDetail</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
                                                         <List.Item>
@@ -134,17 +141,18 @@ export default function NavBar() {
                         <Center>
                             <Box>
                                 <Flex className={classes.quoteBox2}>
-                                    <Box onClick={handleLogout}>
-                                        <NavLink >
-                                            <Box sx={(theme) => ({
-                                                justifyContent: "space-between   ",
-                                                // background: "green",
-                                            })}>
-                                                <MdLogout size={40} />
-                                                <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Log Out</Text>
-                                            </Box>
-                                        </NavLink>
+                                    <Box component={Link} onClick={handleLogout}>
+
+                                        <Box sx={(theme) => ({
+                                            justifyContent: "space-between   ",
+                                            // background: "green",
+                                        })}>
+                                            <MdLogout size={40} />
+                                            <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Log Out</Text>
+                                        </Box>
+
                                     </Box>
+                             
                                 </Flex>
                             </Box>
                         </Center>
@@ -218,7 +226,7 @@ const useStyle = createStyles((theme) => ({
         listStyle: "none",
         textDecoration: "none",
         padding: `10px`,
-        color: "#fff",
+        color: "black",
         fontSize: "25px"
     },
     navcollection: {

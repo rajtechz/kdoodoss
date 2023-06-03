@@ -1,16 +1,17 @@
 import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput, Alert } from '@mantine/core'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 const Url = "https://eventstaging.skoodos.com/api/login"
-export default function Login() {
+export default function Login({setToken}) {
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [mobileError, setMobileError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [loginToken, setLogInToken] = useState('')
+  
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value);
     }
@@ -43,10 +44,18 @@ export default function Login() {
                         'Access-Control-Allow-Origin': '*',
                     }
                 });
-                setLogInToken(response.data.data.token);
-                console.log(loginToken)
-                // console.log(response.data.data.token);
-                // console.log(response.data)
+             
+                setToken(response.data.data.token)
+                AsyncStorage.setItem('token',response.data.data.token)
+                // console.log(loginToken)
+                console.log(response.data.success);
+                console.log(response.success)
+
+                // if (response.data.success === true) {
+                //     window.location.href = '/total';
+
+                // }
+
             } catch (error) {
                 console.error(error);
             }
