@@ -36,7 +36,7 @@ export default function GuestDetail() {
         };
         fetchData();
     }, [])
-  
+
     return (
         <>
             <Box sx={(theme) => ({
@@ -79,28 +79,18 @@ export default function GuestDetail() {
 
                                 </Center>
                             </Box>
-
-
                         </Box>
                     </Center>
-
-
-
                     <Card shadow="sm" padding="lg" radius="md" withBorder mt={50}>
-
                         <Box maw="90%" mx="auto">
-
-
                             <Center mt={50}>
-
                                 <Text
                                     sx={(theme) => ({
                                         color: "#d31360",
                                         fontSize: "25px",
                                         fontWeight: 700,
                                         textTransform: "uppercase"
-                                    })}
-                                >
+                                    })}>
                                     {guestDetail?.message}
                                 </Text>
 

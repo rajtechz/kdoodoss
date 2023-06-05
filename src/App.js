@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Login from './component/Login';
 import ForgetPassword from './component/ForgetPassword';
-import Demo from './component/Demo';
 import Setting from './component/Setting';
 import Total from './component/Total';
 import NavBar from './component/NavBar';
@@ -40,10 +39,11 @@ function App() {
 
           
 
+          <Route path='/arived' element={<Arived />} /> 
           {/* <Route path='/awardees' element={<Awardees />} />
           <Route path='/guest' element={<Guest />} />
           <Route path='/checked' element={<GuestDetail />} />
-          <Route path='/arived' element={<Arived />} /> */}
+          */}
         </Routes>
       </BrowserRouter>
 

@@ -70,14 +70,15 @@ export default function NavBar() {
                                         <NavLink to="/guestdetail" className={classes.navitem}>GuestDetail</NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
+                                        <NavLink to="/arived" className={classes.navitem}>Arived </NavLink>
+                                    </List.Item>
+                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
                                         {/* <NavLink to="/guest" className={classes.navitem}> Guest</NavLink> */}
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
                                         {/* <NavLink to="/checked" className={classes.navitem}> Checked</NavLink> */}
                                     </List.Item>
-                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        {/* <NavLink to="/arived" className={classes.navitem}>Arived </NavLink> */}
-                                    </List.Item>
+                                   
                                 </Flex>
                             </List>
                         </Center>
