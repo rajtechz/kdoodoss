@@ -1,7 +1,7 @@
-import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput, Alert } from '@mantine/core'
+import { ActionIcon, Anchor, Box, Button, Center, Grid, Text, TextInput, Alert, Loader } from '@mantine/core'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 const Url = "https://eventstaging.skoodos.com/api/login"
 export default function Login({setToken}) {
@@ -65,8 +65,31 @@ export default function Login({setToken}) {
     const forgetPassword = () => {
         window.location.href = '/forgetpassword';
     }
+
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
     return (
         <>
+        {
+            loading ? (
+                <Center>
+
+
+                    <Loader color="#3498db" variant="bars" sx={(theme) => ({
+                        height: "100vh",
+
+
+                    })} />
+                </Center>
+
+            ) :
             <Box sx={(theme) => ({
                 overflow: "hidden",
                 height: "100vh",
@@ -187,6 +210,8 @@ export default function Login({setToken}) {
                 </Box>
 
             </Box>
+        }
+         
         </>
     )
 }

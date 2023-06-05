@@ -1,14 +1,40 @@
 import { ActionIcon, Anchor, Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text, TextInput } from '@mantine/core'
-import { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-const Url = "https://eventstaging.skoodos.com/api/1/guest-list"
+const passwordReset = "https://eventstaging.skoodos.com/api/1/guest-list"
 
 
 export default function setting() {
 
-   
     
-  
+      const fetchData = async () => {
+          let token = await AsyncStorage.getItem('token');
+          console.log(token)
+          try {
+              const response = await axios.post(passwordReset, {
+              }, {
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*',
+                      'Authorization': `Bearer ${token}`,
+                  }
+              });
+              console.log(response.data)
+            console.log(response.data.message)
+              
+            
+
+          } catch (error) {
+              console.error(error);
+          }
+      };
+
+  const getToken = async () => {
+      return await AsyncStorage.getItem('token')
+  }
     return (
         <>
             <Box sx={(theme) => ({
@@ -23,11 +49,8 @@ export default function setting() {
                         // background: "red"
                     }
                 })} >
-
                     <Center mt={50}>
-
                         <Box>
-
                             <Center>
                                 <Text sx={(theme) => ({ color: "#fff", fontSize: "25px", fontWeight: 700 })}                            >
                                     ATTENDEE DETAILS
@@ -76,8 +99,6 @@ export default function setting() {
 
 
                                 > EVENT DETAILS
-
-
 
                                 </Text>
 
@@ -559,14 +580,14 @@ export default function setting() {
 
                                 <Divider my="sm" color='gray' variant="dashed" size="sm" />
                             </Box>
-                            <Box  mb={50} mt={50} mx="auto" component="form"
+                            <Box mb={50} mt={50} mx="auto" component="form"
                                 sx={(theme) => ({ width: "90%", height: "100%", })}>
 
                                 <Grid>
                                     <Grid.Col>
-                                    <TextInput
+                                        <TextInput
                                             name='Old password'
-                                       
+
 
                                             size="lg" placeholder="Old password"
                                             styles={{
@@ -574,7 +595,7 @@ export default function setting() {
                                                     color: 'pink',
                                                 }
                                             }}
-                                            />
+                                        />
 
 
                                     </Grid.Col>
@@ -588,7 +609,7 @@ export default function setting() {
                                                     color: 'pink',
                                                 }
                                             }}
-                                           />
+                                        />
 
 
 
@@ -597,20 +618,20 @@ export default function setting() {
                                             name='Confirm password'
 
                                             size="lg"
-                                             placeholder="Confirm password"
+                                            placeholder="Confirm password"
                                             styles={{
                                                 error: {
                                                     color: 'pink',
                                                 }
                                             }}
-                                           />
+                                        />
 
 
 
                                     </Grid.Col>
                                 </Grid>
-                               
-                                
+
+
                             </Box>
                         </Box>
                     </Card>

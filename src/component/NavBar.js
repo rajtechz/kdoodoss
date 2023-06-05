@@ -18,9 +18,18 @@ export default function NavBar() {
         window.location.href = '/setting';
 
     }
+    // Drawer function 
+
+    const handleCloseDrawer = () => {
+        setOpen((prev) => !prev);
+    };
+
+
+
+
     const handleLogout = async (e) => {
         e.preventDefault()
-
+        window.location.reload();
         let token = await AsyncStorage.getItem('token');
         AsyncStorage.setItem('token', '')
         console.log("hellow", token)
@@ -64,21 +73,23 @@ export default function NavBar() {
                             <List>
                                 <Flex className={classes.navcollection}>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/" className={classes.navitem}> Total</NavLink>
+                                        <NavLink to="/" className={classes.navitem}>Total</NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/guestdetail" className={classes.navitem}>GuestDetail</NavLink>
+                                        <NavLink to="/awardees" className={classes.navitem}>Awardee </NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/arived" className={classes.navitem}>Arived </NavLink>
+                                        <NavLink to="/guest" className={classes.navitem}>Guest </NavLink>
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        {/* <NavLink to="/guest" className={classes.navitem}> Guest</NavLink> */}
+                                        <NavLink to="/checkedin" className={classes.navitem}>CheckedIn</NavLink>
+
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        {/* <NavLink to="/checked" className={classes.navitem}> Checked</NavLink> */}
+                                        <NavLink to="/notarrived" className={classes.navitem}>NotArrived</NavLink>
+
                                     </List.Item>
-                                   
+
                                 </Flex>
                             </List>
                         </Center>
@@ -107,30 +118,43 @@ export default function NavBar() {
                                                     <List style={{ listStyle: "none" }}>
                                                         <List.Item>
                                                             {/* <NavLink to="/" > Home</NavLink> */}
-                                                            <NavLink to="/" className={classes.drawerItem} > Total</NavLink>
+                                                            <NavLink to="/" className={classes.drawerItem} onClick={handleCloseDrawer} > AttendeeList</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
 
 
+                                                        {/* <List.Item>
+                                                            <NavLink to="/guestdetail" className={classes.drawerItem}  onClick={handleCloseDrawer}>GuestDetail</NavLink>
+                                                        </List.Item>
+                                                        <Divider mb="xs" mt="xs" /> */}
                                                         <List.Item>
-                                                            <NavLink to="/guestdetail" className={classes.drawerItem}>GuestDetail</NavLink>
+                                                            <NavLink to="/awardees" className={classes.drawerItem} onClick={handleCloseDrawer}> Awardees</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
                                                         <List.Item>
-                                                            <NavLink to="/service" className={classes.drawerItem}> Service</NavLink>
-                                                        </List.Item>
-                                                        <Divider mb="xs" mt="xs" />
-                                                        <List.Item>
-                                                            <NavLink to="/tips" className={classes.drawerItem}> Tips</NavLink>
+                                                            <NavLink to="/awardees" className={classes.drawerItem} onClick={handleCloseDrawer}> Guest</NavLink>
+
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
 
                                                         <List.Item>
-                                                            <NavLink to="/contact" className={classes.drawerItem}> Contact</NavLink>
+                                                            <NavLink to="/checkedin" className={classes.drawerItem} onClick={handleCloseDrawer}> CheckedIn</NavLink>
+
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
+                                                        <List.Item>
+                                                            <NavLink to="/notarrived" className={classes.drawerItem} onClick={handleCloseDrawer}> NotArrived</NavLink>
+
+                                                        </List.Item>
+                                                        <Divider mb="xs" mt="xs" />
+
+                                                        <List.Item component={Link} onClick={handleLogout}>
+                                                            <NavLink className={classes.drawerItem} onClick={handleCloseDrawer}>Log Out</NavLink>
+
+                                                        </List.Item>
                                                     </List>
                                                 </Center>
+
                                             </Drawer.Body>
                                         </Drawer.Content>
                                     </Drawer.Root>
@@ -153,7 +177,7 @@ export default function NavBar() {
                                         </Box>
 
                                     </Box>
-                             
+
                                 </Flex>
                             </Box>
                         </Center>

@@ -69,8 +69,7 @@ export default function ForgetPassword() {
                                 width: "100vw",
                                 height: "100vh",
                                 background: "#09a2e5"
-                            }
-                        })} >
+                            }})} >
                         <Center mt="80px">
                             <Box>
                                 <Center mb={25}>
@@ -139,11 +138,6 @@ export default function ForgetPassword() {
                                 </Box>
                             </Center>
                         </Box>
-
-
-
-
-
                     </Box>
                 </Box>
 

@@ -6,7 +6,7 @@ import { stockData } from "../data"
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
-export default function Guest() {
+export default function CheckedIn() {
 
 
     const [attendancelist, setAttendanceList] = useState([])
@@ -159,7 +159,7 @@ export default function Guest() {
                                                             return (
                                                                 <Box key={index} onClick={guestDetail}>
                                                                     <Flex gap={10}>
-                                                                        <Box p={3} sx={(theme) => ({ background: "#d0f23d", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
+                                                                        <Box p={3} sx={(theme) => ({ background: "#FFD43B", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
 
                                                                         <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
 
