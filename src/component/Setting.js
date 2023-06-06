@@ -1,14 +1,15 @@
 import { ActionIcon, Anchor, Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text, TextInput } from '@mantine/core'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 const passwordReset = "https://eventstaging.skoodos.com/api/1/guest-list"
 
 
 export default function setting() {
+ 
 
-    
       const fetchData = async () => {
           let token = await AsyncStorage.getItem('token');
           console.log(token)
@@ -24,6 +25,7 @@ export default function setting() {
               });
               console.log(response.data)
             console.log(response.data.message)
+           
               
             
 
@@ -31,10 +33,7 @@ export default function setting() {
               console.error(error);
           }
       };
-
-  const getToken = async () => {
-      return await AsyncStorage.getItem('token')
-  }
+     
     return (
         <>
             <Box sx={(theme) => ({

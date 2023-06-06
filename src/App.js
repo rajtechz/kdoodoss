@@ -5,11 +5,9 @@ import ForgetPassword from './component/ForgetPassword';
 import Awardees from './component/Awardees';
 import Setting from './component/Setting';
 import NavBar from './component/NavBar';
-import Arived from './demo/Arived';
 import GuestDetail from './component/GuestDetail';
 import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigate } from "react-router-dom";
 import AttendeeList from './component/AttendeeList';
 import Guest from './component/Guest';
 import CheckedIn from './component/CheckedIn';
@@ -29,6 +27,7 @@ function App() {
   if (!token) {
     return <Login setToken={setToken} />
   }
+  
   return (
     <>
       <BrowserRouter>
@@ -43,14 +42,11 @@ function App() {
           <Route path='/guest' element={<Guest />} />
           <Route path='/checkedin' element={<CheckedIn />} />
           <Route path='/notarrived' element={<NotArrived />} />
+          <Route path='/forgetpassword' element={<ForgetPassword />} />
 
 
 
-          {/* <Route path='/awardees' element={<Awardees />} />
-          <Route path='/arived' element={<Arived />} /> 
-          <Route path='/guest' element={<Guest />} />
-          <Route path='/checked' element={<GuestDetail />} />
-          */}
+       
         </Routes>
       </BrowserRouter>
 

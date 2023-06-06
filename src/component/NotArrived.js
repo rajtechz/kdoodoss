@@ -14,13 +14,7 @@ export default function NotArrived() {
 
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-
+   
     useEffect(() => {
 
 
@@ -40,12 +34,11 @@ export default function NotArrived() {
                 console.log(response?.data)
                 // console.log(response?.data?.data?.attendees[0].status)
                 setAttendanceList(response?.data)
+                setLoading(false)
                 // setConfirmMessage(response?.data)
                 // console.log(attendancelist.success)
 
-                if (response?.data.data) {
-
-                }
+               
 
             } catch (error) {
                 console.error(error);
@@ -57,21 +50,18 @@ export default function NotArrived() {
     const guestDetail = () => {
         window.location.href = '/guestdetail';
     }
+    if (loading) {
+        return <Center>
+            <Loader color="red" variant="bars" sx={(theme) => ({
+                height: "100vh",
+
+
+            })} />
+        </Center>
+    }
     return (
         <>
-            {
-                loading ? (
-                    <Center>
-
-
-                        <Loader color="#3498db" variant="bars" sx={(theme) => ({
-                            height: "100vh",
-
-
-                        })} />
-                    </Center>
-
-                ) :
+           
                     <Box>
                         <Box sx={(theme) => ({
                             background: "#09a2e5",
@@ -242,7 +232,7 @@ export default function NotArrived() {
                         </Box >
                     </Box >
 
-            }
+            
 
 
 

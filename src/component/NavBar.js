@@ -1,4 +1,4 @@
-import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider, Button } from "@mantine/core";
+import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider, Button, Loader } from "@mantine/core";
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import axios from "axios";
 const url = "https://eventstaging.skoodos.com/api/logout"
 export default function NavBar() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
@@ -16,17 +17,11 @@ export default function NavBar() {
     const { classes } = useStyle()
     const profileSetting = () => {
         window.location.href = '/setting';
-
     }
     // Drawer function 
-
     const handleCloseDrawer = () => {
         setOpen((prev) => !prev);
     };
-
-
-
-
     const handleLogout = async (e) => {
         e.preventDefault()
         window.location.reload();
@@ -44,13 +39,19 @@ export default function NavBar() {
                 }
             });
             console.log(response)
+            setLoading(false)
             AsyncStorage.setItem('token', '')
         } catch (error) {
             console.error(error);
         }
     }
+
+   
     return (
+
         <>
+
+
             <Navbar className={classes.navbar}>
                 <Box className={classes.headerBox}>
                 </Box>

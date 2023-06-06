@@ -4,14 +4,15 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 const Url = "https://eventstaging.skoodos.com/api/login"
-export default function Login({setToken}) {
+export default function Login({ setToken }) {
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [mobileError, setMobileError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-  
+    const [loading, setLoading] = useState(true)
+
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value);
     }
@@ -44,17 +45,15 @@ export default function Login({setToken}) {
                         'Access-Control-Allow-Origin': '*',
                     }
                 });
-             
+
                 setToken(response.data.data.token)
-                AsyncStorage.setItem('token',response.data.data.token)
+                AsyncStorage.setItem('token', response.data.data.token)
+                setLoading(false);
                 // console.log(loginToken)
                 console.log(response.data.success);
                 console.log(response.success)
 
-                // if (response.data.success === true) {
-                //     window.location.href = '/total';
 
-                // }
 
             } catch (error) {
                 console.error(error);
@@ -66,152 +65,139 @@ export default function Login({setToken}) {
         window.location.href = '/forgetpassword';
     }
 
+    if (loading) {
+        <Center>
+            <Loader color="#3498db" variant="bars" sx={(theme) => ({
+                height: "100vh",
+            })} />
+        </Center>
+    }
 
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
     return (
         <>
-        {
-            loading ? (
-                <Center>
-
-
-                    <Loader color="#3498db" variant="bars" sx={(theme) => ({
+           
+                    <Box sx={(theme) => ({
+                        overflow: "hidden",
                         height: "100vh",
-
-
-                    })} />
-                </Center>
-
-            ) :
-            <Box sx={(theme) => ({
-                overflow: "hidden",
-                height: "100vh",
-                width: "100vw"
-            })}>
-                <Box
-                    sx={(theme) => ({
-                        height: "100vh",
-                        width: "100vw",
-                        position: "relative",
+                        width: "100vw"
                     })}>
-                    <Box
-                        sx={(theme) => ({
-                            borderRadius: "10px",
-                            background: "#09a2e5",
-                            height: "80vh",
-                            width: "30vw",
-                            position: "absolute",
-                            left: "50%",
-                            top: "50%",
-                            transform: "translate(-50%, -50%)",
-                            "@media(max-width : 768px)": {
-                                width: "100vw",
+                        <Box
+                            sx={(theme) => ({
                                 height: "100vh",
-                                background: "#09a2e5"
-                            }
-                        })} >
-                        <Center mt="80px">
-                            <Box>
-                                <Center mb={25}>
-                                    <Text sx={(theme) => ({
-                                        fontSize: "80px",
-                                        fontWeight: "bolder"
-                                    })}> <span >𝘴𝓴</span> <span style={{ color: "#f2ff1c" }}>ₒₒ</span><span>𝚍ₒ𝘴</span></Text>
-
-                                </Center>
-                                <Text sx={(theme) => ({
-                                    color: "#fff",
-                                    fontSize: "20px"
-                                })}>Welcome to <span > <b> Skoodos Event </b></span></Text>
-                                <Center>
+                                width: "100vw",
+                                position: "relative",
+                            })}>
+                            <Box
+                                sx={(theme) => ({
+                                    borderRadius: "10px",
+                                    background: "#09a2e5",
+                                    height: "80vh",
+                                    width: "30vw",
+                                    position: "absolute",
+                                    left: "50%",
+                                    top: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                    "@media(max-width : 768px)": {
+                                        width: "100vw",
+                                        height: "100vh",
+                                        background: "#09a2e5"
+                                    }
+                                })} >
+                                <Center mt="80px">
                                     <Box>
-                                        <Text
+                                        <Center mb={25}>
+                                            <Text sx={(theme) => ({
+                                                fontSize: "80px",
+                                                fontWeight: "bolder"
+                                            })}> <span >𝘴𝓴</span> <span style={{ color: "#f2ff1c" }}>ₒₒ</span><span>𝚍ₒ𝘴</span></Text>
+
+                                        </Center>
+                                        <Text sx={(theme) => ({
+                                            color: "#fff",
+                                            fontSize: "20px"
+                                        })}>Welcome to <span > <b> Skoodos Event </b></span></Text>
+                                        <Center>
+                                            <Box>
+                                                <Text
+                                                    sx={(theme) => ({
+                                                        color: "#fff",
+                                                        fontSize: "20px"
+                                                    })}>
+                                                    <b>   Check In App! </b> <br />
+                                                </Text>
+                                            </Box>
+                                        </Center>
+                                        <Center mt="xs"
                                             sx={(theme) => ({
-                                                color: "#fff",
+                                                color: "#f2ff1c",
                                                 fontSize: "20px"
-                                            })}>
-                                            <b>   Check In App! </b> <br />
-                                        </Text>
+                                            })} >
+                                            <Text>Log In With Password </Text>
+                                        </Center>
                                     </Box>
                                 </Center>
-                                <Center mt="xs"
-                                    sx={(theme) => ({
-                                        color: "#f2ff1c",
-                                        fontSize: "20px"
-                                    })} >
-                                    <Text>Log In With Password </Text>
-                                </Center>
+                                <Box mt="lg" mx="auto" component="form"
+                                    onSubmit={handleSubmit}
+                                    sx={(theme) => ({ width: "90%", height: "100%", })}>
+                                    <Grid>
+                                        <Grid.Col>
+                                            <TextInput
+                                                name='password'
+                                                value={phone}
+                                                onChange={handleMobileNumberChange}
+                                                color='black'
+                                                placeholder="Mobile"
+                                                pattern="[0-9]{10}"
+                                                size="lg"
+                                                styles={{
+                                                    error: {
+                                                        color: 'pink',
+                                                    }
+                                                }} />
+                                            {mobileError && <Text style={{ color: "red" }}>{mobileError}</Text>}
+                                        </Grid.Col>
+                                        <Grid.Col pt="xl">
+                                            <TextInput
+                                                name='password'
+                                                value={password}
+                                                onChange={handlePasswordChange}
+                                                size="lg" placeholder="Password"
+                                                type={showPassword ? 'text' : 'password'}
+                                                styles={{
+                                                    error: {
+                                                        color: 'pink',
+                                                    }
+                                                }}
+                                                rightSection={
+                                                    <ActionIcon onClick={toggleShowPassword}>
+                                                        {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
+                                                    </ActionIcon>
+                                                } />
+                                            {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
+                                        </Grid.Col>
+                                    </Grid>
+                                    <Center mt="xl">
+                                        <Box>
+                                            <Anchor onClick={forgetPassword} sx={(theme) => ({
+                                                color: "#f2ff1c",
+                                                fontSize: "20px"
+                                            })}>
+                                                Forget Password
+                                            </Anchor>
+                                        </Box>
+                                    </Center>
+                                    <Center mt="xl">
+                                        <Box>
+                                            <Button radius="md" size='lg' type='submit' color="pink" px={50}>Submit</Button>
+                                        </Box>
+                                    </Center>
+                                </Box>
                             </Box>
-                        </Center>
-                        <Box mt="lg" mx="auto" component="form"
-                            onSubmit={handleSubmit}
-                            sx={(theme) => ({ width: "90%", height: "100%", })}>
-                            <Grid>
-                                <Grid.Col>
-                                    <TextInput
-                                        name='password'
-                                        value={phone}
-                                        onChange={handleMobileNumberChange}
-                                        color='black'
-                                        placeholder="Mobile"
-                                        pattern="[0-9]{10}"
-                                        size="lg"
-                                        styles={{
-                                            error: {
-                                                color: 'pink',
-                                            }
-                                        }} />
-                                    {mobileError && <Text style={{ color: "red" }}>{mobileError}</Text>}
-                                </Grid.Col>
-                                <Grid.Col pt="xl">
-                                    <TextInput
-                                        name='password'
-                                        value={password}
-                                        onChange={handlePasswordChange}
-                                        size="lg" placeholder="Password"
-                                        type={showPassword ? 'text' : 'password'}
-                                        styles={{
-                                            error: {
-                                                color: 'pink',
-                                            }
-                                        }}
-                                        rightSection={
-                                            <ActionIcon onClick={toggleShowPassword}>
-                                                {showPassword ? <AiFillEyeInvisible size="lg" /> : <AiFillEye size="lg" />}
-                                            </ActionIcon>
-                                        } />
-                                    {passwordError && <Text style={{ color: "red" }}>{passwordError}</Text>}
-                                </Grid.Col>
-                            </Grid>
-                            <Center mt="xl">
-                                <Box>
-                                    <Anchor onClick={forgetPassword} sx={(theme) => ({
-                                        color: "#f2ff1c",
-                                        fontSize: "20px"
-                                    })}>
-                                        Forget Password
-                                    </Anchor>
-                                </Box>
-                            </Center>
-                            <Center mt="xl">
-                                <Box>
-                                    <Button radius="md" size='lg' type='submit' color="pink" px={50}>Submit</Button>
-                                </Box>
-                            </Center>
                         </Box>
-                    </Box>
-                </Box>
 
-            </Box>
-        }
-         
+                    </Box>
+            
+
         </>
     )
 }

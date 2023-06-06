@@ -5,25 +5,15 @@ import { IoReloadOutline } from "react-icons/io5"
 import { stockData } from "../data"
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigate } from 'react-router-dom'
 const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
 export default function AttendeeList() {
-
-
     const [attendancelist, setAttendanceList] = useState([])
+
     // const [confirmMessage, setConfirmMessage] = useState([])
-
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate()
     useEffect(() => {
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    }, []);
-
-    useEffect(() => {
-
-
         const fetchData = async () => {
             let token = await AsyncStorage.getItem('token');
             console.log(token)
@@ -37,212 +27,209 @@ export default function AttendeeList() {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-                console.log(response?.data)
-                // console.log(response?.data?.data?.attendees[0].status)
+                console.log(response?.data?.data?.attendees[0]?.id)
+
+                console.log(response?.data?.data?.attendees[0]?.guesttype?.title)
                 setAttendanceList(response?.data)
+                setLoading(false)
                 // setConfirmMessage(response?.data)
-                // console.log(attendancelist.success)
-
-                if (response?.data.data) {
-
-                }
-
+                console.log(attendancelist?.data?.attendees[0]?.id)
             } catch (error) {
                 console.error(error);
             }
         };
         fetchData();
-    }, [])
+    }, []);
+
+
+    // const guestDetail = () => {
+    //     window.location.href = `/guestdetail`;
+    // }
 
     const guestDetail = () => {
-        window.location.href = '/guestdetail';
+
+        navigate("/guestdetail");
+    }
+
+    if (loading) {
+        return <Center>
+            <Loader color="red" variant="bars" sx={(theme) => ({
+                height: "100vh",
+            })} />
+        </Center>
     }
     return (
         <>
-            {
-                loading ? (
-                    <Center>
+            <Box>
+                <Box sx={(theme) => ({
+                    background: "#09a2e5",
+                })}>
+                    <Container sx={(theme) => ({
+                        background: "#09a2e5",
+                        padding: 20,
 
-
-                        <Loader color="#3498db" variant="bars" sx={(theme) => ({
-                            height: "100vh",
-
-
-                        })} />
-                    </Center>
-
-                ) :
-                    <Box>
+                    })} >
                         <Box sx={(theme) => ({
-                            background: "#09a2e5",
+                            // position:"sticky",
+                            // top:"200px"
                         })}>
-                            <Container sx={(theme) => ({
-                                background: "#09a2e5",
-                                padding: 20,
-
-                            })} >
-                                <Box sx={(theme) => ({
-                                    // position:"sticky",
-                                    // top:"200px"
-                                })}>
-                                    <TextInput
-                                        icon={<BsSearch size={30} />}
-                                        name='Serach '
-                                        color='black'
-                                        placeholder=' Search By / Name / Phone / ID'
-                                        size="xl"
+                            <TextInput
+                                icon={<BsSearch size={30} />}
+                                name='Serach '
+                                color='black'
+                                placeholder=' Search By / Name / Phone / ID'
+                                size="xl"
+                            />
+                            <Center mt="md">
+                                <Center mt="xl">
+                                    <Box>
+                                        <Button radius="md" size='lg' type='submit' color="pink" px={50}>Search</Button>
+                                    </Box>
+                                </Center>
+                            </Center>
+                        </Box>
+                        <Box shadow="sm" m="md"  >
+                            <Flex sx={() => ({ justifyContent: "space-between", })} >
+                                <Box  >
+                                    {/* <BsFillCalendar2DateFill size={50} color='#fff' /> */}
+                                    <BsFillCalendar2DateFill
+                                        size={window.innerWidth <= 768 ? 30 : 50}
+                                        color="#fff"
+                                        style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }}
                                     />
-                                    <Center mt="md">
-                                        <Center mt="xl">
-                                            <Box>
-                                                <Button radius="md" size='lg' type='submit' color="pink" px={50}>Search</Button>
-                                            </Box>
-                                        </Center>
-                                    </Center>
                                 </Box>
-                                <Box shadow="sm"  m="md"  >
-                                    <Flex sx={() => ({ justifyContent: "space-between", })} >
-                                        <Box  >
-                                            {/* <BsFillCalendar2DateFill size={50} color='#fff' /> */}
-                                            <BsFillCalendar2DateFill
-                                                size={window.innerWidth <= 768 ? 30 : 50}
-                                                color="#fff"
-                                                style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }}
-                                            />
-                                        </Box>
-                                        <Box>
-                                        
-                                                <Text sx={(theme) => ({
-                                                    fontSize: "30px",
-                                                    color: "#fff",
-                                                    fontWeight: "bolder",
-                                                    textTransform: "uppercase",
-                                                    justifyContent:"center",
-                                                    "@media(max-width :768px)": {
-                                                        fontSize: "18px",
-                                                        marginLeft:10
-        
-                                                    }
-                                                })}>
-                                                    {attendancelist?.message}
-                                                </Text>
-                                       
-                                        </Box>
-                                        <Box>
-                                            <IoReloadOutline  size={window.innerWidth <= 768 ? 30 : 50}
-                                                color="#fff"
-                                                style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }}/>
-                                        </Box>
-                                    </Flex>
-                                    <Center>
+                                <Box>
 
-                                        <Text
+                                    <Text sx={(theme) => ({
+                                        fontSize: "30px",
+                                        color: "#fff",
+                                        fontWeight: "bolder",
+                                        textTransform: "uppercase",
+                                        justifyContent: "center",
+                                        "@media(max-width :768px)": {
+                                            fontSize: "18px",
+                                            marginLeft: 10
 
-                                            sx={(theme) => ({
-                                                fontSize: "18px",
-                                                color: "#f2ff1c",
-                                                fontWeight: "bold"
-                                            })}
-                                        > Twinkle Twinkle | Delhi | Session 1 </Text>
-                                    </Center>
+                                        }
+                                    })}>
+                                        {attendancelist?.message}
+                                    </Text>
+
                                 </Box>
-                                <Box mx="auto">
-                                    <Box >
-                                        <Box sx={(theme) => ({ background: "#fff", padding: 20, })}>
+                                <Box>
+                                    <IoReloadOutline size={window.innerWidth <= 768 ? 30 : 50}
+                                        color="#fff"
+                                        style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }} />
+                                </Box>
+                            </Flex>
+                            <Center>
 
-                                            <Box mt={20}>
-                                                <Box >
+                                <Text
 
-                                                    {
-                                                        attendancelist?.data?.attendees?.map((item, index) => {
+                                    sx={(theme) => ({
+                                        fontSize: "18px",
+                                        color: "#f2ff1c",
+                                        fontWeight: "bold"
+                                    })}
+                                > Twinkle Twinkle | Delhi | Session 1 </Text>
+                            </Center>
+                        </Box>
+                        <Box mx="auto">
+                            <Box >
+                                <Box sx={(theme) => ({ background: "#fff", padding: 20, })}>
 
-                                                            return (
-                                                                <Box key={index} onClick={guestDetail}>
-                                                                    <Flex gap={10}>
-                                                                        <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
+                                    <Box mt={20}>
+                                        <Box >
 
-                                                                        <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> Award</Text></Box>
+                                            {
+                                                attendancelist?.data?.attendees?.map((item, index) => {
 
-                                                                        <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>{item.type}</Text></Box>
-                                                                    </Flex>
-                                                                    <Box mt={20}  >
+                                                    return (
+                                                        <Box key={index} onClick={guestDetail} userId={index} >
+                                                            <Flex gap={10}>
+                                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>wardee</Text></Box>
 
-                                                                        <Grid>
-                                                                            <Grid.Col md={6} sm={6}>
-                                                                                <Box>
+                                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> {item?.guesttype?.title}</Text></Box>
 
-
-                                                                                    <Box>
-                                                                                        <Text
-                                                                                            sx={(theme) => ({
-                                                                                                color: "#09a2e5",
-                                                                                                fontSize: "18px",
-                                                                                                fontWeight: "bold"
-                                                                                            })}
-                                                                                        >
-                                                                                            {item?.name}
-                                                                                        </Text>
-                                                                                    </Box>
-                                                                                    <Box>
-                                                                                        <Text sx={(theme) => ({
-                                                                                            fontSize: "18px",
-                                                                                        })}>
-
-                                                                                            {item?.email}
-
-                                                                                        </Text>
-                                                                                    </Box>
-                                                                                    <Box>
-                                                                                        <Text sx={(theme) => ({
-                                                                                            fontSize: "18px",
-                                                                                        })}>
-
-                                                                                            {item?.phone}
-
-                                                                                        </Text>
-                                                                                    </Box>
-                                                                                </Box>
-                                                                            </Grid.Col>
-                                                                            <Grid.Col md={6} sm={6}  >
-
-                                                                                <Box sx={(theme) => ({
-
-                                                                                    marginLeft: "auto",
-                                                                                    "@media(max-width :768px)": {
-
-                                                                                    }
-                                                                                })} >
-
-                                                                                    <Avatar radius={100} size={70} />
+                                                                <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>{item.type}</Text></Box>
+                                                            </Flex>
+                                                            <Box mt={20}  >
+                                                                <Grid>
+                                                                    <Grid.Col md={6} sm={6}>
+                                                                        <Box>
 
 
+                                                                            <Box>
+                                                                                <Text
+                                                                                    sx={(theme) => ({
+                                                                                        color: "#09a2e5",
+                                                                                        fontSize: "18px",
+                                                                                        fontWeight: "bold"
+                                                                                    })}
+                                                                                >
+                                                                                    {item?.name}
+                                                                                </Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                })}>
 
-                                                                                    <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
-                                                                                </Box>
+                                                                                    {item?.email}
+
+                                                                                </Text>
+                                                                            </Box>
+                                                                            <Box>
+                                                                                <Text sx={(theme) => ({
+                                                                                    fontSize: "18px",
+                                                                                })}>
+
+                                                                                    {item?.phone}
+
+                                                                                </Text>
+                                                                            </Box>
+                                                                        </Box>
+                                                                    </Grid.Col>
+                                                                    <Grid.Col md={6} sm={6}  >
+
+                                                                        <Box sx={(theme) => ({
+
+                                                                            marginLeft: "auto",
+                                                                            "@media(max-width :768px)": {
+
+                                                                            }
+                                                                        })} >
+
+                                                                            <Avatar radius={100} size={70} />
 
 
 
-                                                                            </Grid.Col>
-                                                                        </Grid>
+                                                                            <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
+                                                                        </Box>
 
-                                                                        <Divider my="lg" color='#09a2e5' />
-                                                                    </Box>
 
-                                                                </Box>
-                                                            )
-                                                        })
-                                                    }
 
-                                                </Box>
-                                            </Box>
+                                                                    </Grid.Col>
+                                                                </Grid>
+
+                                                                <Divider my="lg" color='#09a2e5' />
+                                                            </Box>
+
+                                                        </Box>
+                                                    )
+                                                })
+                                            }
+
                                         </Box>
                                     </Box>
                                 </Box>
-                            </Container>
-                        </Box >
-                    </Box >
+                            </Box>
+                        </Box>
+                    </Container>
+                </Box >
+            </Box >
 
-            }
+
 
 
 

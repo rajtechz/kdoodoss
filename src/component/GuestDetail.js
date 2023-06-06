@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text } from '@mantine/core'
+import { Box, Button, Card, Center, Container, Divider, Grid, Text } from '@mantine/core'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-const atendeesUrl = "https://eventstaging.skoodos.com/api/1/attendes/2"
 export default function GuestDetail() {
+    const atendeesUrl = `https://eventstaging.skoodos.com/api/1/attendes/`
 
     const [guestDetail, setGuestDetail] = useState("")
 
     useEffect(() => {
-
-
         const fetchData = async () => {
             let token = await AsyncStorage.getItem('token');
             console.log(token)
@@ -28,8 +26,6 @@ export default function GuestDetail() {
                 setGuestDetail(response?.data)
                 console.log(guestDetail?.message)
                 console.log(guestDetail?.data?.attendee?.tickettype?.name)
-
-
             } catch (error) {
                 console.error(error);
             }

@@ -1,12 +1,14 @@
 import { Anchor, Box, Button, Center, TextInput, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 import { useState } from 'react';
 
 
 const url = "https://eventstaging.skoodos.com/api/forget"
-export default function ForgetPassword() {
+export default function ForgetPassword({ setToken }) {
     const [phone, setPhone] = useState('');
-    const [errors, setErrors] = useState("");
+    const [phoneErrors, setPhoneErrors] = useState("");
 
     const handleMobileNumberChange = (e) => {
         setPhone(e.target.value)
@@ -15,39 +17,55 @@ export default function ForgetPassword() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(phone)
-        setErrors("");
+
+        setPhoneErrors('');
+
         const mobileRegex = /^\d{10}$/;
         if (!phone.match(mobileRegex)) {
-            setErrors('Invalid mobile number format.');
+            setPhoneErrors('Invalid mobile number format.');
         }
 
-        try {
-            await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ 'phone': phone, })
-            }).then((response) => response.json())
-                .then((responseJson) => {
-                    console.log(responseJson);
+
+        const fetchData = async () => {
+            let token = await AsyncStorage.getItem('token');
+            console.log(token)
+            try {
+                const response = await axios.post(url, {
+                }, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Authorization': `Bearer ${token}`,
+                    }
                 });
-        } catch (error) {
-            console.error(error);
-        }
+                console.log(response?.data)
+                // console.log(response?.data?.data?.attendees[0].status)
+                // setAttendanceList(response?.data)
+                // setConfirmMessage(response?.data)
+                // console.log(attendancelist.success)
+
+
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+
+
+
     }
     const loginWithPassword = () => {
-        window.location.href = '/';
+        window.location.href = "/";
     }
     return (
         <>
             <Box sx={(theme) => ({
-                    //  background:"#d0f23d",
-                     overflow:"hidden",
-                     height:"100vh",
-                     width:"100vw"
+                //  background:"#d0f23d",
+                overflow: "hidden",
+                height: "100vh",
+                width: "100vw"
             })}>
                 <Box
                     sx={(theme) => ({
@@ -69,7 +87,8 @@ export default function ForgetPassword() {
                                 width: "100vw",
                                 height: "100vh",
                                 background: "#09a2e5"
-                            }})} >
+                            }
+                        })} >
                         <Center mt="80px">
                             <Box>
                                 <Center mb={25}>
@@ -113,9 +132,9 @@ export default function ForgetPassword() {
                                 value={phone}
                                 onChange={handleMobileNumberChange}
                                 pattern="[0-9]{10}"
-                                styles={{error: {color: "#fff",}}} />
+                                styles={{ error: { color: "#fff", } }} />
                             <Text >
-                                {errors && <Text style={{ color: "red" }}>{errors}</Text>}
+                                {phoneErrors && <Text style={{ color: "red" }}>{phoneErrors}</Text>}
                             </Text>
                             <Center mt="50px">
                                 <Box>
