@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Loader, Tabs, Text, TextInput } from '@mantine/core'
+import { Avatar, Box, Button, Center, Container, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
 import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
-import { stockData } from "../data"
+
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigate } from 'react-router-dom'
-const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
 export default function AttendeeList() {
+    const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
     const [attendancelist, setAttendanceList] = useState([])
-
-    // const [confirmMessage, setConfirmMessage] = useState([])
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate()
     useEffect(() => {
@@ -27,13 +25,12 @@ export default function AttendeeList() {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-                console.log(response?.data?.data?.attendees[0]?.id)
-
-                console.log(response?.data?.data?.attendees[0]?.guesttype?.title)
                 setAttendanceList(response?.data)
                 setLoading(false)
+                // console.log(response?.data?.data?.attendees[0]?.id)
+                // console.log(response?.data?.data?.attendees[0]?.guesttype?.title)
                 // setConfirmMessage(response?.data)
-                console.log(attendancelist?.data?.attendees[0]?.id)
+                // console.log(attendancelist?.data?.attendees[0]?.id)
             } catch (error) {
                 console.error(error);
             }
@@ -41,14 +38,8 @@ export default function AttendeeList() {
         fetchData();
     }, []);
 
-
-    // const guestDetail = () => {
-    //     window.location.href = `/guestdetail`;
-    // }
-
-    const guestDetail = () => {
-
-        navigate("/guestdetail");
+    const referesh = () => {
+        window.location.reload()
     }
 
     if (loading) {
@@ -58,9 +49,10 @@ export default function AttendeeList() {
             })} />
         </Center>
     }
+
     return (
         <>
-            <Box>
+        
                 <Box sx={(theme) => ({
                     background: "#09a2e5",
                 })}>
@@ -70,8 +62,7 @@ export default function AttendeeList() {
 
                     })} >
                         <Box sx={(theme) => ({
-                            // position:"sticky",
-                            // top:"200px"
+
                         })}>
                             <TextInput
                                 icon={<BsSearch size={30} />}
@@ -91,12 +82,15 @@ export default function AttendeeList() {
                         <Box shadow="sm" m="md"  >
                             <Flex sx={() => ({ justifyContent: "space-between", })} >
                                 <Box  >
-                                    {/* <BsFillCalendar2DateFill size={50} color='#fff' /> */}
+
                                     <BsFillCalendar2DateFill
                                         size={window.innerWidth <= 768 ? 30 : 50}
                                         color="#fff"
                                         style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }}
                                     />
+                                    {/* <Group position="center">
+                                        <Calendar />
+                                    </Group> */}
                                 </Box>
                                 <Box>
 
@@ -117,7 +111,7 @@ export default function AttendeeList() {
 
                                 </Box>
                                 <Box>
-                                    <IoReloadOutline size={window.innerWidth <= 768 ? 30 : 50}
+                                    <IoReloadOutline onClick={referesh} size={window.innerWidth <= 768 ? 30 : 50}
                                         color="#fff"
                                         style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }} />
                                 </Box>
@@ -134,100 +128,91 @@ export default function AttendeeList() {
                                 > Twinkle Twinkle | Delhi | Session 1 </Text>
                             </Center>
                         </Box>
-                        <Box mx="auto">
-                            <Box >
-                                <Box sx={(theme) => ({ background: "#fff", padding: 20, })}>
+                        <Box sx={(theme) => ({ background: "#fff", padding: 20, })}>
+                            {
+                                attendancelist?.data?.attendees?.map((item, index) => {
+                                    return (
+                                        <Box key={index} onClick={() => navigate("/guestdetail", { state: { attendeeId: item.id } })}   >
 
-                                    <Box mt={20}>
-                                        <Box >
+                                            <Flex gap={10} sx={() => ({
+                                                "@media(max-width:374px)": {
+                                                    flexDirection: "column"
+                                                }
+                                            })}>
+                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}>wardee</Text></Box>
 
-                                            {
-                                                attendancelist?.data?.attendees?.map((item, index) => {
+                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}> {item?.guesttype?.title}</Text></Box>
 
-                                                    return (
-                                                        <Box key={index} onClick={guestDetail} userId={index} >
-                                                            <Flex gap={10}>
-                                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>wardee</Text></Box>
-
-                                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}> {item?.guesttype?.title}</Text></Box>
-
-                                                                <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10}>{item.type}</Text></Box>
-                                                            </Flex>
-                                                            <Box mt={20}  >
-                                                                <Grid>
-                                                                    <Grid.Col md={6} sm={6}>
-                                                                        <Box>
-
-
-                                                                            <Box>
-                                                                                <Text
-                                                                                    sx={(theme) => ({
-                                                                                        color: "#09a2e5",
-                                                                                        fontSize: "18px",
-                                                                                        fontWeight: "bold"
-                                                                                    })}
-                                                                                >
-                                                                                    {item?.name}
-                                                                                </Text>
-                                                                            </Box>
-                                                                            <Box>
-                                                                                <Text sx={(theme) => ({
-                                                                                    fontSize: "18px",
-                                                                                })}>
-
-                                                                                    {item?.email}
-
-                                                                                </Text>
-                                                                            </Box>
-                                                                            <Box>
-                                                                                <Text sx={(theme) => ({
-                                                                                    fontSize: "18px",
-                                                                                })}>
-
-                                                                                    {item?.phone}
-
-                                                                                </Text>
-                                                                            </Box>
-                                                                        </Box>
-                                                                    </Grid.Col>
-                                                                    <Grid.Col md={6} sm={6}  >
-
-                                                                        <Box sx={(theme) => ({
-
-                                                                            marginLeft: "auto",
-                                                                            "@media(max-width :768px)": {
-
-                                                                            }
-                                                                        })} >
-
-                                                                            <Avatar radius={100} size={70} />
+                                                <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}>{item.type}</Text></Box>
+                                            </Flex>
+                                            <Box mt={20}  >
+                                                <Grid>
+                                                    <Grid.Col md={6} sm={6}>
 
 
 
-                                                                            <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
-                                                                        </Box>
-
-
-
-                                                                    </Grid.Col>
-                                                                </Grid>
-
-                                                                <Divider my="lg" color='#09a2e5' />
-                                                            </Box>
-
+                                                        <Box>
+                                                            <Text
+                                                                sx={(theme) => ({
+                                                                    color: "#09a2e5",
+                                                                    fontSize: "18px",
+                                                                    fontWeight: "bold"
+                                                                })}
+                                                            >
+                                                                {item?.name}
+                                                            </Text>
                                                         </Box>
-                                                    )
-                                                })
-                                            }
+                                                        <Box>
+                                                            <Text sx={(theme) => ({
+                                                                fontSize: "18px",
+                                                            })}>
+
+                                                                {item?.email}
+
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Text sx={(theme) => ({
+                                                                fontSize: "18px",
+                                                            })}>
+
+                                                                {item?.phone}
+
+                                                            </Text>
+                                                        </Box>
+
+                                                    </Grid.Col>
+                                                    <Grid.Col md={6} sm={6} sx={(theme) => ({ justifyContent: "center", alignItems: "center", })} >
+
+
+                                                        <Avatar radius={100} size={70} />
+
+
+
+                                                        <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
+
+
+
+
+                                                    </Grid.Col>
+                                                </Grid>
+
+                                                <Divider my="lg" color='#09a2e5' />
+                                            </Box>
 
                                         </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
+                                    )
+                                })
+                            }
+
+
                         </Box>
+
+
+
                     </Container>
                 </Box >
-            </Box >
+
 
 
 

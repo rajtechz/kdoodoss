@@ -1,6 +1,6 @@
-import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider, Button, Loader } from "@mantine/core";
+import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider,  } from "@mantine/core";
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, } from "react-router-dom";
 
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { MdLogout } from 'react-icons/md';
@@ -9,15 +9,13 @@ import axios from "axios";
 const url = "https://eventstaging.skoodos.com/api/logout"
 export default function NavBar() {
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true)
+    
     const [open, setOpen] = useState(false);
     const toggleDrawer = () => {
         setOpen((prev) => !prev);
     };
     const { classes } = useStyle()
-    const profileSetting = () => {
-        window.location.href = '/setting';
-    }
+   
     // Drawer function 
     const handleCloseDrawer = () => {
         setOpen((prev) => !prev);
@@ -39,14 +37,17 @@ export default function NavBar() {
                 }
             });
             console.log(response)
-            setLoading(false)
+           
             AsyncStorage.setItem('token', '')
         } catch (error) {
             console.error(error);
         }
     }
 
-   
+    const profileSetting = () => {
+        // window.location.href = '/allsettings';
+        navigate("/allsettings")
+    }
     return (
 
         <>
@@ -60,10 +61,10 @@ export default function NavBar() {
                         <Center>
                             <Box>
                                 <Flex className={classes.logoBox2}>
-                                    <Box>
-                                        <NavLink onClick={profileSetting} className={classes.logo}>
+                                  
+                                        <Box onClick={profileSetting} className={classes.logo}>
                                             <RiUserSettingsLine size={40} />
-                                        </NavLink>
+                                    
                                     </Box>
                                 </Flex>
                             </Box>
@@ -102,32 +103,24 @@ export default function NavBar() {
                                     <Burger
                                         opened={open}
                                         onClick={() => setOpen((o) => !o)}
-
-                                        color="#FF5829"
-                                        zIndex={100} />
+                                        // color="#FF5829"
+                                         />
                                     <Drawer.Root
                                         opened={open}
                                         onClose={toggleDrawer}
-                                        size={350}
+                                        // size={350}
                                         overlayProps={{ opacity: 0.4 }}>
-                                        <Drawer.Content style={{ backgroundColor: "#FF5829", color: "#fff" }}>
+                                        <Drawer.Content style={{ backgroundColor: "#FF5829", }}>
                                             <Drawer.Header style={{ backgroundColor: "#FF5829" }}>
                                                 <Drawer.CloseButton size="lg" style={{ color: "black", background: "none" }} />
                                             </Drawer.Header>
-                                            <Drawer.Body mt={100}>
+                                            <Drawer.Body >
                                                 <Center>
                                                     <List style={{ listStyle: "none" }}>
                                                         <List.Item>
-                                                            {/* <NavLink to="/" > Home</NavLink> */}
                                                             <NavLink to="/" className={classes.drawerItem} onClick={handleCloseDrawer} > AttendeeList</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
-
-
-                                                        {/* <List.Item>
-                                                            <NavLink to="/guestdetail" className={classes.drawerItem}  onClick={handleCloseDrawer}>GuestDetail</NavLink>
-                                                        </List.Item>
-                                                        <Divider mb="xs" mt="xs" /> */}
                                                         <List.Item>
                                                             <NavLink to="/awardees" className={classes.drawerItem} onClick={handleCloseDrawer}> Awardees</NavLink>
                                                         </List.Item>
@@ -219,6 +212,7 @@ const useStyle = createStyles((theme) => ({
 
     },
     logo: {
+        color:"black",
         cursor: "pointer",
         listStyle: "none",
         textDecoration: "none",

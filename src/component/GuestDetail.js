@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Card, Center, Container, Divider, Grid, Text } from '@mantine/core'
+import { Box, Button, Card, Center, Container, Divider, Grid, Text, Loader } from '@mantine/core'
 import axios from 'axios'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-export default function GuestDetail() {
-    const atendeesUrl = `https://eventstaging.skoodos.com/api/1/attendes/`
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+
+export default function GuestDetail() {
+    const navigate = useNavigate()
+    const [checkInStatus, setCheckInStatus] = useState()
+    const [loading, setLoading] = useState(true)
+
+    const { state } = useLocation();
+    const { attendeeId } = state;
+    console.log(attendeeId)
     const [guestDetail, setGuestDetail] = useState("")
+    const atendeesUrl = `https://eventstaging.skoodos.com/api/1/attendes/${attendeeId}`;
+
+    console.log(atendeesUrl)
+
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,17 +36,35 @@ export default function GuestDetail() {
                     }
                 });
                 console.log(response?.data)
+                setLoading(false)
                 // console.log(response.data.message)
                 setGuestDetail(response?.data)
-                console.log(guestDetail?.message)
+                console.log(guestDetail?.data?.attendee?.status)
+                setCheckInStatus(guestDetail?.data?.attendee?.status)
                 console.log(guestDetail?.data?.attendee?.tickettype?.name)
+
+                // if (response?.data?.data?.attendee?.status === 1) {
+                //     setGuestDetail("Yes")
+                // }
             } catch (error) {
                 console.error(error);
             }
         };
         fetchData();
-    }, [])
+    }, []);
 
+    if (loading) {
+        return <Center>
+            <Loader color="red" variant="bars" sx={(theme) => ({
+                height: "100vh",
+            })} />
+        </Center>
+    }
+
+
+    const goBack = () => {
+        navigate(-1)
+    }
     return (
         <>
             <Box sx={(theme) => ({
@@ -44,10 +76,13 @@ export default function GuestDetail() {
                     width: "100%",
                     "@media(max-width :768px)": {
                         width: "90%",
-                        // background: "red"
+
                     }
                 })} >
-                    <Center mt={50}>
+                    <Button color='pink' size='md' radius="md" onClick={goBack}>
+                        <Text>Back</Text>
+                    </Button>
+                    <Center >
                         <Box>
                             <Center>
                                 <Text sx={(theme) => ({ color: "#fff", fontSize: "25px", fontWeight: 700, textTransform: "uppercase" })}                            >
@@ -55,7 +90,6 @@ export default function GuestDetail() {
                                 </Text>
                             </Center>
                             <Center>
-
                                 <Text sx={(theme) =>
                                 ({
                                     color: "#f2ff1c",
@@ -67,12 +101,9 @@ export default function GuestDetail() {
                                 </Text>
                             </Center>
                             <Box mt="lg">
-
                                 <Center >
-
                                     <Button size='md' px={50} mr={15} radius={50} color='green' style={{ border: "1px solid #fff" }}>Awardee</Button>
                                     <Button size='md' px={50} ml={15} radius={50} color='green' style={{ border: "1px solid #fff" }}>Student</Button>
-
                                 </Center>
                             </Box>
                         </Box>
@@ -118,7 +149,7 @@ export default function GuestDetail() {
                                             sx={(theme) => ({
                                                 color: "gray",
                                                 fontSize: "20px",
-                                                // fontWeight:"bold"
+
                                             })}
 
                                         > School Name  </Text>
@@ -242,7 +273,7 @@ export default function GuestDetail() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        >Yes</Text>
+                                        >{checkInStatus === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
                                     </Box>
                                 </Grid.Col>
 

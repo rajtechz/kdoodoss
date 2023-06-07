@@ -1,39 +1,56 @@
-import { ActionIcon, Anchor, Box, Button, Card, Center, Container, Divider, Flex, Grid, Group, Image, Text, TextInput } from '@mantine/core'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { useState } from 'react';
+import { Box, Button, Card, Center, Container, Divider, Grid, Loader, Text, TextInput } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import axios from 'axios';
 
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-const passwordReset = "https://eventstaging.skoodos.com/api/1/guest-list"
+// const passwordReset = "https://eventstaging.skoodos.com/api/1/guest-list"
 
 
-export default function setting() {
- 
+export default function AllSettings() {
+    const navigate = useNavigate()
+    const [loading, setLoading] = useState(true)
 
-      const fetchData = async () => {
-          let token = await AsyncStorage.getItem('token');
-          console.log(token)
-          try {
-              const response = await axios.post(passwordReset, {
-              }, {
-                  headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      'Access-Control-Allow-Origin': '*',
-                      'Authorization': `Bearer ${token}`,
-                  }
-              });
-              console.log(response.data)
-            console.log(response.data.message)
-           
-              
-            
+    //   const fetchData = async () => {
+    //       let token = await AsyncStorage.getItem('token');
+    //       console.log(token)
+    //       try {
+    //           const response = await axios.post(passwordReset, {
+    //           }, {
+    //               headers: {
+    //                   'Accept': 'application/json',
+    //                   'Content-Type': 'application/json',
+    //                   'Access-Control-Allow-Origin': '*',
+    //                   'Authorization': `Bearer ${token}`,
+    //               }
+    //           });
+    //           console.log(response.data)
+    //         console.log(response.data.message)
 
-          } catch (error) {
-              console.error(error);
-          }
-      };
-     
+
+
+
+    //       } catch (error) {
+    //           console.error(error);
+    //       }
+    //   };
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 1000)
+    }, [])
+    if (loading) {
+        return <Center>
+            <Loader color="red" variant="bars" sx={(theme) => ({
+                height: "100vh",
+
+
+            })} />
+        </Center>
+    }
+    const goBack = () => {
+        navigate(-1)
+    }
     return (
         <>
             <Box sx={(theme) => ({
@@ -48,6 +65,10 @@ export default function setting() {
                         // background: "red"
                     }
                 })} >
+                    <Button color='pink' mb={20} size='md' radius="md" onClick={goBack}>
+                        <Text>Back</Text>
+
+                    </Button>
                     <Center mt={50}>
                         <Box>
                             <Center>
