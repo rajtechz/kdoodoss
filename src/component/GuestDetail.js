@@ -65,6 +65,7 @@ export default function GuestDetail() {
     }
     return (
         <>
+
             <Box sx={(theme) => ({
                 background: "#09a2e5", width: "100vw", paddingBottom: 100
             })}>
