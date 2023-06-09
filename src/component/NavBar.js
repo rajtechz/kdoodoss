@@ -109,7 +109,7 @@ export default function NavBar() {
                                         opened={open}
                                         onClose={toggleDrawer}
                                         // size={350}
-                                        overlayProps={{ opacity: 0.4 }}>
+                                        overlayprops={{ opacity: 0.4 }}>
                                         <Drawer.Content style={{ backgroundColor: "#FF5829", }}>
                                             <Drawer.Header style={{ backgroundColor: "#FF5829" }}>
                                                 <Drawer.CloseButton size="lg" style={{ color: "black", background: "none" }} />

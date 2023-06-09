@@ -60,8 +60,6 @@ export default function GuestDetail() {
             })} />
         </Center>
     }
-
-
     const goBack = () => {
         navigate(-1)
     }
@@ -70,13 +68,11 @@ export default function GuestDetail() {
             <Box sx={(theme) => ({
                 background: "#09a2e5", width: "100vw", paddingBottom: 100
             })}>
-
                 <Container pt="lg" width="40%" sx={(theme) => ({
                     height: "100%",
                     width: "100%",
                     "@media(max-width :768px)": {
                         width: "90%",
-
                     }
                 })} >
                     <Button color='pink' size='md' radius="md" onClick={goBack}>

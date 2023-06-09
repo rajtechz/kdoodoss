@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Button, Center, Container, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
+import { Avatar, Box, Button, Center, Container, Divider, Flex, Grid, Group, Loader, Text, TextInput } from '@mantine/core'
 import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
 
@@ -14,7 +14,7 @@ export default function AttendeeList() {
     useEffect(() => {
         const fetchData = async () => {
             let token = await AsyncStorage.getItem('token');
-            console.log(token)
+            // console.log(token)
             try {
                 const response = await axios.post(urlGuestList, {
                 }, {
@@ -25,6 +25,7 @@ export default function AttendeeList() {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
+                console.log(response)
                 setAttendanceList(response?.data)
                 setLoading(false)
                 // console.log(response?.data?.data?.attendees[0]?.id)
@@ -40,6 +41,7 @@ export default function AttendeeList() {
 
     const referesh = () => {
         window.location.reload()
+
     }
 
     if (loading) {
@@ -51,14 +53,15 @@ export default function AttendeeList() {
     }
 
     return (
-        <>
+        <>        
         
-                <Box sx={(theme) => ({
+                <Box  sx={(theme) => ({
                     background: "#09a2e5",
                 })}>
-                    <Container sx={(theme) => ({
+                    <Container pt={150} sx={(theme) => ({
                         background: "#09a2e5",
                         padding: 20,
+                        
 
                     })} >
                         <Box sx={(theme) => ({
@@ -71,7 +74,7 @@ export default function AttendeeList() {
                                 placeholder=' Search By / Name / Phone / ID'
                                 size="xl"
                             />
-                            <Center mt="md">
+                            <Center >
                                 <Center mt="xl">
                                     <Box>
                                         <Button radius="md" size='lg' type='submit' color="pink" px={50}>Search</Button>
@@ -132,25 +135,23 @@ export default function AttendeeList() {
                             {
                                 attendancelist?.data?.attendees?.map((item, index) => {
                                     return (
-                                        <Box key={index} onClick={() => navigate("/guestdetail", { state: { attendeeId: item.id } })}   >
+                                        <Box key={index} onClick={() => navigate("/guestdetail", { state: { attendeeId: item.id } })}  sx={(theme)=>({cursor:"pointer",})} >
 
                                             <Flex gap={10} sx={() => ({
+                                            
                                                 "@media(max-width:374px)": {
                                                     flexDirection: "column"
                                                 }
                                             })}>
-                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}>wardee</Text></Box>
+                                                <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}>Awardee</Text></Box>
 
                                                 <Box p={3} sx={(theme) => ({ background: "green", borderRadius: "20px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}> {item?.guesttype?.title}</Text></Box>
 
                                                 <Box p={3} sx={(theme) => ({ background: "red", borderRadius: "50px", color: "#fff", fontSize: "18px", fontWeight: "bold" })}><Text mx={10} sx={(theme) => ({ textAlign: "center" })}>{item.type}</Text></Box>
                                             </Flex>
-                                            <Box mt={20}  >
+                                            <Box mt={20}>
                                                 <Grid>
                                                     <Grid.Col md={6} sm={6}>
-
-
-
                                                         <Box>
                                                             <Text
                                                                 sx={(theme) => ({
@@ -183,16 +184,8 @@ export default function AttendeeList() {
 
                                                     </Grid.Col>
                                                     <Grid.Col md={6} sm={6} sx={(theme) => ({ justifyContent: "center", alignItems: "center", })} >
-
-
                                                         <Avatar radius={100} size={70} />
-
-
-
                                                         <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
-
-
-
 
                                                     </Grid.Col>
                                                 </Grid>
@@ -204,12 +197,7 @@ export default function AttendeeList() {
                                     )
                                 })
                             }
-
-
                         </Box>
-
-
-
                     </Container>
                 </Box >
 

@@ -1,10 +1,10 @@
-import { ActionIcon, Anchor, Box, Button, Center, Image, Grid, Text, TextInput, Loader, BackgroundImage, Flex } from '@mantine/core'
+import { ActionIcon, Anchor, Box, Button, Center,  Grid, Text, TextInput, Loader, } from '@mantine/core'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, { useState } from 'react'
-import Ep from "../component/assets/Ep.png"
-import s from "../component/assets/s.png"
-import gd from "../component/assets/gd.png"
+// import Ep from "../component/assets/Ep.png"
+// import s from "../component/assets/s.png"
+// import gd from "../component/assets/gd.png"
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 export default function Login({ setToken }) {
     const Url = "https://eventstaging.skoodos.com/api/login"
@@ -50,8 +50,8 @@ export default function Login({ setToken }) {
                 AsyncStorage.setItem('token', response.data.data.token)
                 setLoading(false);
                 // console.log(loginToken)
-                console.log(response.data.success);
-                console.log(response.success)
+                // console.log(response.data.success);
+                // console.log(response.success)
             } catch (error) {
                 console.error(error);
             }
