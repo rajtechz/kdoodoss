@@ -54,10 +54,9 @@ export default function NavBar() {
 
 
             <Navbar className={classes.navbar}>
-                <Box className={classes.headerBox}>
-                </Box>
+              
                 <Box style={{ display: "flex", height: "100%", }}>
-                    <Box className={classes.logoBox}>
+                    {/* <Box className={classes.logoBox}>
                         <Center>
                             <Box>
                                 <Flex className={classes.logoBox2}>
@@ -69,33 +68,53 @@ export default function NavBar() {
                                 </Flex>
                             </Box>
                         </Center>
-                    </Box>
+                    </Box> */}
                     <Box className={classes.menubar}>
                         <Center>
                             <List>
                                 <Flex className={classes.navcollection}>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/" className={classes.navitem}>Total</NavLink>
+                                        <NavLink to="/" className={classes.navitem}>Home </NavLink>
                                     </List.Item>
-                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/awardees" className={classes.navitem}>Awardee </NavLink>
+                                    <List.Item sx={(theme) => ({ listStyle: "none" })} onClick={profileSetting}>
+                                        <NavLink  className={classes.navitem}>ProfileSetting</NavLink>
                                     </List.Item>
-                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/guest" className={classes.navitem}>Guest </NavLink>
+                                    <List.Item sx={(theme) => ({ listStyle: "none" })} onClick={handleLogout}>
+                                        <NavLink  className={classes.navitem}>Logout </NavLink>
                                     </List.Item>
-                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
+                                    {/* <List.Item sx={(theme) => ({ listStyle: "none" })}>
                                         <NavLink to="/checkedin" className={classes.navitem}>CheckedIn</NavLink>
 
                                     </List.Item>
                                     <List.Item sx={(theme) => ({ listStyle: "none" })}>
                                         <NavLink to="/notarrived" className={classes.navitem}>NotArrived</NavLink>
 
-                                    </List.Item>
+                                    </List.Item> */}
 
                                 </Flex>
                             </List>
                         </Center>
                     </Box>
+                    {/* <Box className={classes.quote}>
+                        <Center>
+                            <Box>
+                                <Flex className={classes.quoteBox2}>
+                                    <Box component={Link} onClick={handleLogout}>
+
+                                        <Box sx={(theme) => ({
+                                            justifyContent: "space-between   ",
+                                            // background: "green",
+                                        })}>
+                                            <MdLogout size={40} />
+                                            <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Log Out</Text>
+                                        </Box>
+
+                                    </Box>
+
+                                </Flex>
+                            </Box>
+                        </Center>
+                    </Box> */}
                     <Box className={classes.togalBox}>
                         <Center >
                             <Box>
@@ -156,26 +175,7 @@ export default function NavBar() {
                             </Box>
                         </Center>
                     </Box>
-                    <Box className={classes.quote}>
-                        <Center>
-                            <Box>
-                                <Flex className={classes.quoteBox2}>
-                                    <Box component={Link} onClick={handleLogout}>
-
-                                        <Box sx={(theme) => ({
-                                            justifyContent: "space-between   ",
-                                            // background: "green",
-                                        })}>
-                                            <MdLogout size={40} />
-                                            <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Log Out</Text>
-                                        </Box>
-
-                                    </Box>
-
-                                </Flex>
-                            </Box>
-                        </Center>
-                    </Box>
+                  
                 </Box >
             </Navbar >
         </>

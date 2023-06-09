@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AllSettings from './component/AllSettings';
 import AllDetails from './component/AllDetails';
 import Nav from './component/nav/Nav';
+import NavBar from './component/NavBar';
 // import AttendeesList from './component/AttendeesList';
 function App() {
   const [token, setToken] = useState("");
@@ -28,8 +29,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {/* <NavBar /> */}
-        <Nav/>
+        <NavBar />
+        {/* <Nav/> */}
         <Routes>
           <Route path='/guestdetail' element={<GuestDetail />} />
           <Route path='/allsettings' element={<AllSettings />} />

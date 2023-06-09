@@ -37,19 +37,20 @@ export default function Nav() {
     <>
       <Box sx={() => ({
 
-        background: "rgb(0,0,0,0.3)",
-        width: "max-content",
-        /* display: block; */
+        // background: "rgb(0,0,0,0.3)",
+        background:"red",
+        // width: "max-content",
+       
         padding: "1rem 2rem",
         zIndex: 2,
         position: "fixed",
         left: "50%",
         transform: "translateX(-50%)",
-        bottom: "2rem",
+        // bottom: "2rem",
         display: "flex",
         gap: "1.5rem",
         borderRadius: "3rem",
-        backdropFilter: "blur(15px)"
+        // backdropFilter: "blur(15px)"
       })}>
 
 

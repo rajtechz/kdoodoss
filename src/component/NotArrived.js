@@ -48,7 +48,7 @@ export default function NotArrivd() {
     return (
         <>
             <Box sx={(theme) => ({ background: "#09a2e5", })}>
-                <Container pt={150} sx={(theme) => ({ background: "#09a2e5", padding: 20, })} >
+                <Container  sx={(theme) => ({ background: "#09a2e5", padding: 20, })} >
                     <Box sx={(theme) => ({})}>
                         <TextInput icon={<BsSearch size={30} />} name='Serach ' color='black' placeholder=' Search By / Name / Phone / ID' size="xl" />
                         <Center mt="xl">

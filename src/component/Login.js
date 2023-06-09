@@ -6,7 +6,9 @@ import React, { useState } from 'react'
 // import s from "../component/assets/s.png"
 // import gd from "../component/assets/gd.png"
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 export default function Login({ setToken }) {
+    
     const Url = "https://eventstaging.skoodos.com/api/login"
     const [showPassword, setShowPassword] = useState(false);
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
@@ -49,6 +51,8 @@ export default function Login({ setToken }) {
                 setToken(response.data.data.token)
                 AsyncStorage.setItem('token', response.data.data.token)
                 setLoading(false);
+                window.location.href = ("/")
+                
                 // console.log(loginToken)
                 // console.log(response.data.success);
                 // console.log(response.success)

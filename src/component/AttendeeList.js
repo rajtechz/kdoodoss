@@ -58,7 +58,7 @@ export default function AttendeeList() {
                 <Box  sx={(theme) => ({
                     background: "#09a2e5",
                 })}>
-                    <Container pt={150} sx={(theme) => ({
+                    <Container  sx={(theme) => ({
                         background: "#09a2e5",
                         padding: 20,
                         
