@@ -199,7 +199,7 @@ export default function GuestDetail() {
                                                 fontWeight: "bold"
                                             })}
 
-                                        >{guestDetail?.data?.attendee?.tickettype?.name} </Text>
+                                        >{guestDetail?.data?.attendee?.tickettype?.name}</Text>
                                     </Box>
                                 </Grid.Col>
                                 <Grid.Col xs={6} md={6} lg={6} sm={6} xl={6}>

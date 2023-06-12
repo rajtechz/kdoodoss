@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Button, Center, Container, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
+import { Avatar, Box, Button, Center, Container,ActionIcon,Group, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
 import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigate } from 'react-router-dom'
+import { Calendar } from '@mantine/dates'
+
 export default function NotArrivd() {
     const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
     const [attendancelist, setAttendanceList] = useState([])
     const [loading, setLoading] = useState(true);
+    const [value, setValue] = useState(false);
+
     const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
@@ -58,17 +62,32 @@ export default function NotArrivd() {
                         </Center>
                     </Box>
                     <Box shadow="sm" m="md"  >
-                        <Flex sx={() => ({ justifyContent: "space-between", })} >
-                            <Box  >
-                                <BsFillCalendar2DateFill size={window.innerWidth <= 768 ? 30 : 50} color="#fff" style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }} />
-                            </Box>
+                    <Flex sx={() => ({ justifyContent: "space-between", })} >
+                            <ActionIcon variant="transparent" onClick={() => { setValue(!value) }} >
+                                <BsFillCalendar2DateFill color={"#ffffff"} style={{ fontSize: '50px' }} />
+                            </ActionIcon>
+                            {value && <Group sx={(theme) => ({ background: "#087F5B", zIndex: 3, position: 'absolute', marginTop: "50px", })}><Calendar /></Group>}
+
                             <Box>
-                                <Text sx={(theme) => ({ fontSize: "30px", color: "#fff", fontWeight: "bolder", textTransform: "uppercase", justifyContent: "center", "@media(max-width :768px)": { fontSize: "18px", marginLeft: 10 } })}>
+
+                                <Text sx={(theme) => ({
+                                    fontSize: "30px",
+                                    color: "#fff",
+                                    fontWeight: "bolder",
+                                    textTransform: "uppercase",
+                                    justifyContent: "center",
+                                    "@media(max-width :768px)": {
+                                        fontSize: "18px",
+                                        marginLeft: 10
+
+                                    }
+                                })}>
                                     {attendancelist?.message}
                                 </Text>
+
                             </Box>
                             <Box>
-                                <IoReloadOutline onClick={referesh} size={window.innerWidth <= 768 ? 30 : 50} color="#fff" style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }} />
+                                <IoReloadOutline onClick={referesh} size={window.innerWidth <= 768 ? 30 : 30} color="#fff" style={{ fontSize: window.innerWidth <= 768 ? '20px' : '20px' }} />
                             </Box>
                         </Flex>
                         <Center>

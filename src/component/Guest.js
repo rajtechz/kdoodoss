@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Box, Button, Center, Container, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
+import { Avatar, Box, Button, Center, Container, ActionIcon,Group, Divider, Flex, Grid, Loader, Text, TextInput } from '@mantine/core'
 import { BsFillCalendar2DateFill, BsSearch } from "react-icons/bs"
 import { IoReloadOutline } from "react-icons/io5"
 
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigate } from 'react-router-dom'
+import { Calendar } from '@mantine/dates'
 export default function Guest() {
     const urlGuestList = "https://eventstaging.skoodos.com/api/1/guest-list"
     const [attendancelist, setAttendanceList] = useState([])
     const [loading, setLoading] = useState(true);
+    const [value, setValue] = useState(false);
+
     const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
@@ -57,7 +60,7 @@ export default function Guest() {
             <Box sx={(theme) => ({
                 background: "#09a2e5",
             })}>
-                <Container  sx={(theme) => ({
+                <Container sx={(theme) => ({
                     background: "#09a2e5",
                     padding: 20,
 
@@ -81,16 +84,12 @@ export default function Guest() {
                         </Center>
                     </Box>
                     <Box shadow="sm" m="md"  >
-                        <Flex sx={() => ({ justifyContent: "space-between", })} >
-                            <Box  >
+                    <Flex sx={() => ({ justifyContent: "space-between", })} >
+                            <ActionIcon variant="transparent" onClick={() => { setValue(!value) }} >
+                                <BsFillCalendar2DateFill color={"#ffffff"} style={{ fontSize: '50px' }} />
+                            </ActionIcon>
+                            {value && <Group sx={(theme) => ({ background: "#087F5B", zIndex: 3, position: 'absolute', marginTop: "50px", })}><Calendar /></Group>}
 
-                                <BsFillCalendar2DateFill
-                                    size={window.innerWidth <= 768 ? 30 : 50}
-                                    color="#fff"
-                                    style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }}
-                                />
-
-                            </Box>
                             <Box>
 
                                 <Text sx={(theme) => ({
@@ -110,9 +109,7 @@ export default function Guest() {
 
                             </Box>
                             <Box>
-                                <IoReloadOutline onClick={referesh} size={window.innerWidth <= 768 ? 30 : 50}
-                                    color="#fff"
-                                    style={{ fontSize: window.innerWidth <= 768 ? '20px' : '50px' }} />
+                                <IoReloadOutline onClick={referesh} size={window.innerWidth <= 768 ? 30 : 30} color="#fff" style={{ fontSize: window.innerWidth <= 768 ? '20px' : '20px' }} />
                             </Box>
                         </Flex>
                         <Center>
