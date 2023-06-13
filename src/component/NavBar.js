@@ -1,9 +1,6 @@
-import { Center, Flex, List, Navbar, Text, createStyles, Drawer, Box, Burger, Divider,  } from "@mantine/core";
+import { Center, Flex, List, Navbar,  createStyles, Drawer, Box, Burger, Divider,  } from "@mantine/core";
 import { useState } from "react";
 import { Link, NavLink, useNavigate, } from "react-router-dom";
-
-import { RiUserSettingsLine } from 'react-icons/ri';
-import { MdLogout } from 'react-icons/md';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const url = "https://eventstaging.skoodos.com/api/logout"
@@ -51,24 +48,10 @@ export default function NavBar() {
     return (
 
         <>
-
-
             <Navbar className={classes.navbar}>
               
                 <Box style={{ display: "flex", height: "100%", }}>
-                    {/* <Box className={classes.logoBox}>
-                        <Center>
-                            <Box>
-                                <Flex className={classes.logoBox2}>
-                                  
-                                        <Box onClick={profileSetting} className={classes.logo}>
-                                            <RiUserSettingsLine size={40} />
-                                    
-                                    </Box>
-                                </Flex>
-                            </Box>
-                        </Center>
-                    </Box> */}
+                  
                     <Box className={classes.menubar}>
                         <Center>
                             <List>
@@ -82,39 +65,13 @@ export default function NavBar() {
                                     <List.Item sx={(theme) => ({ listStyle: "none" })} onClick={handleLogout}>
                                         <NavLink  className={classes.navitem}>Logout </NavLink>
                                     </List.Item>
-                                    {/* <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/checkedin" className={classes.navitem}>CheckedIn</NavLink>
-
-                                    </List.Item>
-                                    <List.Item sx={(theme) => ({ listStyle: "none" })}>
-                                        <NavLink to="/notarrived" className={classes.navitem}>NotArrived</NavLink>
-
-                                    </List.Item> */}
+                                   
 
                                 </Flex>
                             </List>
                         </Center>
                     </Box>
-                    {/* <Box className={classes.quote}>
-                        <Center>
-                            <Box>
-                                <Flex className={classes.quoteBox2}>
-                                    <Box component={Link} onClick={handleLogout}>
-
-                                        <Box sx={(theme) => ({
-                                            justifyContent: "space-between   ",
-                                            // background: "green",
-                                        })}>
-                                            <MdLogout size={40} />
-                                            <Text sx={(theme) => ({ fontSize: "14px", color: "black", fontWeight: "normal" })}>Log Out</Text>
-                                        </Box>
-
-                                    </Box>
-
-                                </Flex>
-                            </Box>
-                        </Center>
-                    </Box> */}
+                   
                     <Box className={classes.togalBox}>
                         <Center >
                             <Box>
@@ -122,7 +79,7 @@ export default function NavBar() {
                                     <Burger
                                         opened={open}
                                         onClick={() => setOpen((o) => !o)}
-                                        // color="#FF5829"
+                              
                                          />
                                     <Drawer.Root
                                         opened={open}
@@ -137,30 +94,13 @@ export default function NavBar() {
                                                 <Center>
                                                     <List style={{ listStyle: "none" }}>
                                                         <List.Item>
-                                                            <NavLink to="/" className={classes.drawerItem} onClick={handleCloseDrawer} > AttendeeList</NavLink>
+                                                            <NavLink to="/" className={classes.drawerItem} onClick={handleCloseDrawer} > Home</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
-                                                        <List.Item>
-                                                            <NavLink to="/awardees" className={classes.drawerItem} onClick={handleCloseDrawer}> Awardees</NavLink>
+                                                        <List.Item onClick={profileSetting}>
+                                                            <NavLink className={classes.drawerItem} onClick={handleCloseDrawer}> ProfileSetting</NavLink>
                                                         </List.Item>
                                                         <Divider mb="xs" mt="xs" />
-                                                        <List.Item>
-                                                            <NavLink to="/awardees" className={classes.drawerItem} onClick={handleCloseDrawer}> Guest</NavLink>
-
-                                                        </List.Item>
-                                                        <Divider mb="xs" mt="xs" />
-
-                                                        <List.Item>
-                                                            <NavLink to="/checkedin" className={classes.drawerItem} onClick={handleCloseDrawer}> CheckedIn</NavLink>
-
-                                                        </List.Item>
-                                                        <Divider mb="xs" mt="xs" />
-                                                        <List.Item>
-                                                            <NavLink to="/notarrived" className={classes.drawerItem} onClick={handleCloseDrawer}> NotArrived</NavLink>
-
-                                                        </List.Item>
-                                                        <Divider mb="xs" mt="xs" />
-
                                                         <List.Item component={Link} onClick={handleLogout}>
                                                             <NavLink className={classes.drawerItem} onClick={handleCloseDrawer}>Log Out</NavLink>
 
@@ -258,7 +198,6 @@ const useStyle = createStyles((theme) => ({
         width: "80%",
         margin: 0,
         padding: 0,
-
     },
     quote: {
         width: "20%",
@@ -268,11 +207,9 @@ const useStyle = createStyles((theme) => ({
         },
         '@media (max-width: 768px)': {
             display: "none"
-
         },
     },
     headerBox: {
-
         background: "#ff5829",
         listStyle: "none",
         display: "none",
@@ -291,7 +228,6 @@ const useStyle = createStyles((theme) => ({
         fontSize: "14px",
         fontWeight: 700,
         color: "#fff",
-
     },
     togalBox: {
         width: "20%",

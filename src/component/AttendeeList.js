@@ -125,7 +125,7 @@ export default function AttendeeList() {
                                                 <Text sx={(theme) => ({ fontSize: "18px", fontWeight: "bold", })}>Check-In: {item.status === 1 ? <span style={{ color: "green" }}> Yes </span> : <span style={{ color: "red" }}>No</span>} </Text>
 
                                             </Grid.Col>
-                                        </Grid>     hihklukl
+                                        </Grid>     
                                         <Divider my="lg" color='#09a2e5' />
                                     </Box>
                                 </Box>
