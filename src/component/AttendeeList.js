@@ -36,8 +36,8 @@ export default function AttendeeList() {
                 console.log(response?.data?.data?.attendees[0]?.guesttype?.title)
                 console.log(attendancelist?.data?.attendees[0].type)
 
-                // setConfirmMessage(response?.data)
-                // console.log(attendancelist?.data?.attendees[0]?.id)
+                setConfirmMessage(response?.data)
+                console.log(attendancelist?.data?.attendees[0]?.id)
             } catch (error) {
                 console.error(error);
             }
