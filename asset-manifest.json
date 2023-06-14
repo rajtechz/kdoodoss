@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/kdoodoss/static/css/main.fcc80a85.css",
+    "main.js": "/kdoodoss/static/js/main.dfd8281b.js",
+    "static/js/787.d1b1566a.chunk.js": "/kdoodoss/static/js/787.d1b1566a.chunk.js",
+    "index.html": "/kdoodoss/index.html",
+    "main.fcc80a85.css.map": "/kdoodoss/static/css/main.fcc80a85.css.map",
+    "main.dfd8281b.js.map": "/kdoodoss/static/js/main.dfd8281b.js.map",
+    "787.d1b1566a.chunk.js.map": "/kdoodoss/static/js/787.d1b1566a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fcc80a85.css",
+    "static/js/main.dfd8281b.js"
+  ]
+}
